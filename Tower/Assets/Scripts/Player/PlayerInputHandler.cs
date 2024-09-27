@@ -17,30 +17,30 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] PlayerInputStack _inputStack;
     private Vector2 _direction;
     ShadowControlInputs shadowModifier;
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    _player = GetComponent<PlayerController>();
-    //}
+    //Start is called before the first frame update
+    void Start()
+    {
+        _player = GetComponent<PlayerController>();
+    }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    if (_player.IsAlive)
-    //    {
+    // Update is called once per frame
+    void Update()
+    {
+        if (_player.IsAlive)
+        {
 
-    //        if (!PauseSettings.IsGamePaused)
-    //        {
-    //             _player.CurrentPlayerState.Move(_direction);
+           //if (!PauseSettings.IsGamePaused)
+           //
+                _player.CurrentPlayerState.Move(_direction);
 
-    //        }
-    //    }
-    //}
-    //private void OnMove(InputValue value)
-    //{
-    //    _direction = value.Get<Vector2>();
-        
-    //}
+           //
+        }
+    }
+    private void OnMove(InputValue value)
+    {
+        _direction = value.Get<Vector2>();
+
+    }
     //void OnJump(InputValue value)
     //{
     //    if (PauseSettings.IsGamePaused) return;
@@ -53,23 +53,23 @@ public class PlayerInputHandler : MonoBehaviour
     //    _direction = value.Get<Vector2>();
     //    Logger.Log(_direction);
     //}
-    //private void OnAttack(InputValue value)
-    //{
-    //    if (PauseSettings.IsGamePaused) return;
-    //    if (_useCommands)
-    //    {
-    //        _inputStack.CurrentCommand = new AttackInputCommand(_player.CurrentPlayerState);
-    //        if (_direction.y > 0) _inputStack.CurrentCommand = new AttackInputCommand(_player.CurrentPlayerState, PlayerCombat.AttackModifiers.UP_ARROW);
-    //        if (_direction.y < 0) _inputStack.CurrentCommand = new AttackInputCommand(_player.CurrentPlayerState, PlayerCombat.AttackModifiers.DOWN_ARROW);
-    //    }
-    //    else
-    //    {
-            
-    //        if(_direction.y==0) _player.CurrentPlayerState.Attack();
-    //        else if (_direction.y > 0) _player.CurrentPlayerState.Attack(PlayerCombat.AttackModifiers.UP_ARROW);
-    //        else if (_direction.y < 0) _player.CurrentPlayerState.Attack(PlayerCombat.AttackModifiers.DOWN_ARROW);
-    //    }
-    //}
+    private void OnAttack(InputValue value)
+    {
+       // if (PauseSettings.IsGamePaused) return;
+        if (_useCommands)
+        {
+            _inputStack.CurrentCommand = new AttackInputCommand(_player.CurrentPlayerState);
+            if (_direction.y > 0) _inputStack.CurrentCommand = new AttackInputCommand(_player.CurrentPlayerState, PlayerCombat.AttackModifiers.UP_ARROW);
+            if (_direction.y < 0) _inputStack.CurrentCommand = new AttackInputCommand(_player.CurrentPlayerState, PlayerCombat.AttackModifiers.DOWN_ARROW);
+        }
+        else
+        {
+
+            if (_direction.y == 0) _player.CurrentPlayerState.Attack();
+            else if (_direction.y > 0) _player.CurrentPlayerState.Attack(PlayerCombat.AttackModifiers.UP_ARROW);
+            else if (_direction.y < 0) _player.CurrentPlayerState.Attack(PlayerCombat.AttackModifiers.DOWN_ARROW);
+        }
+    }
     //private void OnControlShadow(InputValue value)
     //{
     //    if (PauseSettings.IsGamePaused) return;

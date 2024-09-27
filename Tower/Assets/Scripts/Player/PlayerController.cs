@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,9 +11,9 @@ public class PlayerController : MonoBehaviour
     public bool IsAlive => _isAlive;
     public PlayerState CurrentPlayerState => _currentPlayerState;
     public GameObject MainBody => _mainBody;
-    [Header("Player"), SerializeField] Animator _anim;
+    [Header("Player")]//, SerializeField] Animator _anim;
     [SerializeField] GameObject _mainBody;
-    //[SerializeField] AnimationManager _playerAnimationManager;
+    [SerializeField] AnimationManager _playerAnimationManager;
     [SerializeField] PlayerMovement _playerMovement;
     //[SerializeField] PlayerChecks _playerChecks;
     //[SerializeField] PlayerCombat _playerCombat;
@@ -24,15 +26,84 @@ public class PlayerController : MonoBehaviour
     private PlayerContext _context;
     private Dictionary<Type, PlayerState> playerStates = new Dictionary<Type, PlayerState>();
     private bool _isAlive = true;
-    // Start is called before the first frame update
     void Start()
     {
-        
+        //_playerHealthSystem.OnPushed += PushPlayer;
+        //_playerHealthSystem.OnDeath += PlayerDeath;
+        List<Type> states = AppDomain.CurrentDomain.GetAssemblies().SelectMany(domainAssembly => domainAssembly.GetTypes())
+            .Where(type => typeof(PlayerState).IsAssignableFrom(type) && !type.IsAbstract).ToArray().ToList();
+
+        _context = new PlayerContext
+        {
+            ChangePlayerState = ChangeState,
+            animationManager = _playerAnimationManager,
+            playerMovement = _playerMovement,
+            WaitAndPerformFunction = WaitAndExecuteFunction,
+            WaitFrameAndPerformFunction = WaitFrameAndExecuteFunction,
+            //coroutineHolder = this,
+            //shadowControlModeSelectionUI = _shadowControlModeSelectionUI,
+            //checks = _playerChecks,
+            //placableShadowSelection = _placableShadowSelection,
+            //shadowSpikeSkill = _shadowSpikeSkill,
+            //combat = _playerCombat,
+            //canPerformAirCombo = true,
+            //shadowControl = _playerShadowsInteractions,
+            //collisions = _playerCollisions,
+            //playerDodge = _playerDodge,
+        };
+        PlayerState.GetState getState = GetState;
+        foreach (Type state in states)
+        {
+            playerStates.Add(state, (PlayerState)Activator.CreateInstance(state, getState));
+        }
+        PlayerState newState = GetState(typeof(PlayerIdleState));
+        newState.SetUpState(_context);
+        _currentPlayerState = newState;
     }
 
-    // Update is called once per frame
+    public PlayerState GetState(Type state)
+    {
+        return playerStates[state];
+    }
     void Update()
     {
-        
+        _currentPlayerState.Update();
+    }
+    private void FixedUpdate()
+    {
+        _currentPlayerState.FixedUpdate();
+    }
+    public void ChangeState(PlayerState newState)
+    {
+      //  if (_printState) Logger.Log(newState.GetType());
+        _currentPlayerState.InterruptState();
+        _currentPlayerState = newState;
+    }
+    private void PlayerDeath(IDamagable damagable)
+    {
+        _playerMovement.SetRBMaterial(PlayerMovement.PhysicMaterialType.NONE);
+        //PlayerState newState = GetState(typeof(PlayerDeadState));
+        //ChangeState(newState);
+        //newState.SetUpState(_context); ;
+        _gameOverPanel.SetActive(true);
+    }
+    public void PushPlayer(PushInfo psuhInfo)
+    {
+        //_playerMovement.PushPlayer(psuhInfo);
+        //_currentPlayerState.Push();
+    }
+    public Coroutine WaitAndExecuteFunction(float timeToWait, Action function)
+    {
+        return StartCoroutine(HelperMethods.DelyedFunction(timeToWait, function));
+    }
+    public Coroutine WaitFrameAndExecuteFunction(Action function)
+    {
+        return StartCoroutine(HelperMethods.WaitFrame(function));
+    }
+
+    private void OnDestroy()
+    {
+        //_playerHealthSystem.OnDeath -= PlayerDeath;
+        //_playerHealthSystem.OnPushed -= PushPlayer;
     }
 }
