@@ -12,7 +12,8 @@ public class PlayerContext
     public PlayerMovement playerMovement;
     public AnimationManager animationManager;
    // public PlayerChecks checks;
-   // public PlayerCombat combat;
+    public PlayerCombat combat;
+    public PlayerCombat.AttackModifiers attackModifier;
    // public PlayerCollisions collisions;
    // public PlayerDodge playerDodge;
 }

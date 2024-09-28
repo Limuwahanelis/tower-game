@@ -15,6 +15,7 @@ public class PlayerIdleState : PlayerState
     }
     public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
     {
+        _context.attackModifier = modifier;
         ChangeState(PlayerAttackState.StateType);
     }
     public override void Update()
@@ -25,7 +26,8 @@ public class PlayerIdleState : PlayerState
     public override void SetUpState(PlayerContext context)
     {
         base.SetUpState(context);
-        _context.animationManager.PlayAnimation("Idle");
+        //_context.animationManager.PlayAnimation("Idle");
+        _context.animationManager.Animator.SetBool("Move", false);
     }
 
     public override void InterruptState()

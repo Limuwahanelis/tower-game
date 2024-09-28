@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerCombat;
 
 public class PlayerMovingState : PlayerState
 {
@@ -13,10 +14,12 @@ public class PlayerMovingState : PlayerState
     public override void SetUpState(PlayerContext context)
     {
         base.SetUpState(context);
-        _context.animationManager.PlayAnimation("Move");
+        //_context.animationManager.PlayAnimation("Move");
+        _context.animationManager.Animator.SetBool("Move", true);
     }
     public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
     {
+        _context.attackModifier=modifier;
         ChangeState(PlayerAttackState.StateType);
     }
 

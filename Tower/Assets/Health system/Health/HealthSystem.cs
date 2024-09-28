@@ -27,9 +27,12 @@ public class HealthSystem : MonoBehaviour,IDamagable
     // Start is called before the first frame update
     protected void Start()
     {
-        _hpBar.SetMaxHealth(_maxHP);
+        if (_hpBar != null)
+        {
+            _hpBar.SetMaxHealth(_maxHP);
+            _hpBar.SetHealth(_maxHP);
+        }
         _currentHP = _maxHP;
-        _hpBar.SetHealth(_currentHP);
     }
     public virtual void TakeDamage(DamageInfo info)
     {
@@ -66,7 +69,7 @@ public class HealthSystem : MonoBehaviour,IDamagable
         if (!IsDeathEventSubscribedTo())
         {
             Destroy(gameObject);
-            Destroy(_hpBar.gameObject);
+            if(_hpBar!=null) Destroy(_hpBar.gameObject);
         }
         else OnDeath?.Invoke(this);
     }

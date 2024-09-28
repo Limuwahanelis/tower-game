@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class PlayerCombat : MonoBehaviour
 
         NONE, UP_ARROW, DOWN_ARROW,
     }
+    public Action OnAttackEnded;
     [SerializeField] Weapon _playerWeapon;
     [SerializeField] GameObject _weaponObject;
     [SerializeField] Transform _rightHandWeaponHold;
@@ -41,6 +43,7 @@ public class PlayerCombat : MonoBehaviour
     }
     private void StopCheckingForEnemyCollider()
     {
+        OnAttackEnded?.Invoke();
         SetCheckForEnemies(false);
     }
     public void SetCheckForEnemies(bool value)

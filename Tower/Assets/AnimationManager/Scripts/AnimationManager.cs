@@ -10,18 +10,19 @@ using System.Linq;
 [RequireComponent(typeof(Animator))]
 public class AnimationManager : MonoBehaviour
 {
+    public Animator Animator => _anim;
     struct AnimState
     {
         string name;
         float time;
     }
+    public AnimationDurationList animList;
     private string _currentAnimation;
-    public Animator _anim;
     private float _animLength;
     private bool _overPlayAnimationEnded = true;
     private Coroutine _currentTimer;
     private List<AnimState> _states = new List<AnimState>();
-    public AnimationDurationList animList;
+    private Animator _anim;
 
 #if UNITY_EDITOR
     private AnimatorController animatorController;
