@@ -33,8 +33,14 @@ public class AnimationManager : MonoBehaviour
         animList.animatorController = animatorController;
         animList.RefreshList();
     }
-
+#else
+    private void Awake()
+    {
+        _anim = GetComponent<Animator>();
+    }
 #endif
+
+
     public void PlayAnimation(string name, bool canBePlayedOver = true)
     {
         var animData = animList.animations.Find(x => x.name == name && x.layer == 0);
@@ -47,14 +53,14 @@ public class AnimationManager : MonoBehaviour
         if (!canBePlayedOver)
         {
             _overPlayAnimationEnded = false;
-            _animLength = GetAnimationLength(animData);
+            _animLength = GetAnimationLengthRaw(animData);
             _currentTimer = StartCoroutine(TimerCor(_animLength, SetOverPlayAnimAsEnded));
             _anim.Play(Animator.StringToHash(name)); //clipToPlay.nameHash);
             _currentAnimation = name;
         }
         if (_overPlayAnimationEnded)
         {
-            _animLength = GetAnimationLength(animData);
+            _animLength = GetAnimationLengthRaw(animData);
             StartCoroutine(TimerCor(_animLength, SetNormalAnimAsEneded));
             _anim.Play(Animator.StringToHash(name)); //clipToPlay.nameHash);
             _currentAnimation = name;
@@ -74,14 +80,14 @@ public class AnimationManager : MonoBehaviour
         if (!canBePlayedOver)
         {
             _overPlayAnimationEnded = false;
-            _animLength = GetAnimationLength(animData, layer);
+            _animLength = GetAnimationLengthRaw(animData, layer);
             _currentTimer = StartCoroutine(TimerCor(_animLength, SetOverPlayAnimAsEnded));
             _anim.Play(Animator.StringToHash(name)); //clipToPlay.nameHash);
             _currentAnimation = name;
         }
         if (_overPlayAnimationEnded)
         {
-            _animLength = GetAnimationLength(animData, layer);
+            _animLength = GetAnimationLengthRaw(animData, layer);
             StartCoroutine(TimerCor(_animLength, SetNormalAnimAsEneded));
             _anim.Play(Animator.StringToHash(name)); //clipToPlay.nameHash);
             _currentAnimation = name;
@@ -100,6 +106,15 @@ public class AnimationManager : MonoBehaviour
     }
     public float GetAnimationLength(string name, int layer = 0)
     {
+       return GetAnimationLengthRaw(name,layer)/GetAnimationSpeed(name,layer);
+    }
+    public float GetAnimationLength(AnimationData animData, int layer = 0)
+    {
+        return GetAnimationLengthRaw(animData, layer)/GetAnimationSpeed(animData.name,layer);
+    }
+
+    public float GetAnimationLengthRaw(string name, int layer = 0)
+    {
         if (name == "Empty") return 0;
         float clipDuration = 0;
         AnimationData animData = animList.animations.Find(x => x.name == name && x.layer == layer);
@@ -107,13 +122,13 @@ public class AnimationManager : MonoBehaviour
         else return animData.duration;
     }
 
-    public float GetAnimationLength(AnimationData animData,int layer=0)
+    public float GetAnimationLengthRaw(AnimationData animData,int layer=0)
     {
         float clipDuration = 0.1f;
         clipDuration = animData.duration;
         return clipDuration;
     }
-    public float GetAnimationLength(AnimationData animData, string layerName)
+    public float GetAnimationLengthRaw(AnimationData animData, string layerName)
     {
         int layer = _anim.GetLayerIndex(layerName);
         float clipDuration = 0;
@@ -140,10 +155,6 @@ public class AnimationManager : MonoBehaviour
         int layer = _anim.GetLayerIndex(layerName);
         clipSpeed = animList.animations.Find(x => x.name == name && x.layer == layer).speed;
         return clipSpeed;
-    }
-    private void Update()
-    {
-
     }
     public float GetAnimationCurrentDuration(string stateName,int layer = 0)
     {

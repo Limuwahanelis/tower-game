@@ -41,13 +41,13 @@ public class PlayerInputHandler : MonoBehaviour
         _direction = value.Get<Vector2>();
 
     }
-    //void OnJump(InputValue value)
-    //{
-    //    if (PauseSettings.IsGamePaused) return;
-    //    if (_useCommands) _inputStack.CurrentCommand= new JumpInputCommand(_player.CurrentPlayerState);
-    //    else _player.CurrentPlayerState.Jump();
+    void OnJump(InputValue value)
+    {
+        //if (PauseSettings.IsGamePaused) return;
+        if (_useCommands) _inputStack.CurrentCommand = new JumpInputCommand(_player.CurrentPlayerState);
+        else _player.CurrentPlayerState.Jump();
 
-    //}
+    }
     //void OnVertical(InputValue value)
     //{
     //    _direction = value.Get<Vector2>();

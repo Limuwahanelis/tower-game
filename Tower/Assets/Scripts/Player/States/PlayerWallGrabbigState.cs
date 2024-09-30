@@ -16,7 +16,7 @@ public class PlayerWallGrabbigState : PlayerState
         _context.playerMovement.StopPlayer();
         _context.animationManager.Animator.SetBool("Climb wall",true);
         //_context.animationEvents.OnWallClimbed.AddListener(WallClimbed);
-        _context.WaitAndPerformFunction( _context.animationManager.GetAnimationLength("climb 2") + _context.animationManager.GetAnimationLength("Player wall grab"), () => { WallClimbed(); });
+        _context.WaitAndPerformFunction( _context.animationManager.GetAnimationLengthRaw("climb 2") + _context.animationManager.GetAnimationLengthRaw("Player wall grab"), () => { WallClimbed(); });
     }
 
     public override void Update()
@@ -25,12 +25,12 @@ public class PlayerWallGrabbigState : PlayerState
     }
     private void WallClimbed()
     {
+        Logger.Log("CLimbed");
         _context.playerMovement.UnparentSpirtes();
         _context.playerMovement.transform.position = _context.climbTilePos;
         _context.playerMovement.ParentSpirtes();
         _context.animationManager.Animator.SetBool("Climb wall", false);
         _context.playerMovement.SetRB(true);
-        _context.spearWallGrab.ResetWallGrab();
         ChangeState(PlayerIdleState.StateType);
     }
     public override void InterruptState()

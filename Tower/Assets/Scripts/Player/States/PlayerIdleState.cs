@@ -18,6 +18,10 @@ public class PlayerIdleState : PlayerState
         _context.attackModifier = modifier;
         ChangeState(PlayerAttackState.StateType);
     }
+    public override void Jump()
+    {
+        ChangeState(PlayerJumpingState.StateType);
+    }
     public override void Update()
     {
         PerformInputCommand();

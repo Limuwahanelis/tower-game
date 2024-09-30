@@ -11,7 +11,7 @@ public class PlayerSpearWallGrab : MonoBehaviour
     [SerializeField] HangableTile _tiles;
     public UnityEvent<Vector3Int, bool> OnClimb;
     Collider2D[] _results=new Collider2D[4];
-    private bool _canGrab = true;
+    private bool _canGrab = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,9 +40,9 @@ public class PlayerSpearWallGrab : MonoBehaviour
             }
         }
     }
-    public void ResetWallGrab()
+    public void SetWallGrab(bool value)
     {
-        _canGrab = true;
+        _canGrab = value;
     }
     private void OnDrawGizmosSelected()
     {

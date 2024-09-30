@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject _mainBody;
     [SerializeField] AnimationManager _playerAnimationManager;
     [SerializeField] PlayerMovement _playerMovement;
-    //[SerializeField] PlayerChecks _playerChecks;
+    [SerializeField] PlayerChecks _playerChecks;
     [SerializeField] PlayerCombat _playerCombat;
     [SerializeField] PlayerAnimationsEvents _playerAnimationsEvents;
     [SerializeField] PlayerSpearWallGrab _playerSpearWallGrab;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
             spearWallGrab = _playerSpearWallGrab,
             //coroutineHolder = this,
             //shadowControlModeSelectionUI = _shadowControlModeSelectionUI,
-            //checks = _playerChecks,
+            checks = _playerChecks,
             combat = _playerCombat,
             //canPerformAirCombo = true,
             //collisions = _playerCollisions,

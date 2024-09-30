@@ -28,7 +28,11 @@ public class PlayerMovingState : PlayerState
         _context.playerMovement.Move(direction.x);
         if (direction.x == 0) ChangeState(PlayerIdleState.StateType);
     }
-
+    public override void Jump()
+    {
+        base.Jump();
+        ChangeState(PlayerJumpingState.StateType);
+    }
     public override void Update()
     {
         PerformInputCommand();

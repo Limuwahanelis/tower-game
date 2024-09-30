@@ -37,14 +37,14 @@ public class PlayerAttackState : PlayerState
     {
         string attackTrigger = "Normal attack";
         _animSpeed = _context.animationManager.GetAnimationSpeed("Attack 1");
-        _animLength = _context.animationManager.GetAnimationLength("Attack 1") / _animSpeed;
+        _animLength = _context.animationManager.GetAnimationLengthRaw("Attack 1") / _animSpeed;
         switch (modifier)
         {
             case PlayerCombat.AttackModifiers.UP_ARROW:
                 {
                     attackTrigger = "Up attack";
                     _animSpeed = _context.animationManager.GetAnimationSpeed("Attack UR 1");
-                    _animLength = _context.animationManager.GetAnimationLength("Attack UR 1") / _animSpeed;
+                    _animLength = _context.animationManager.GetAnimationLengthRaw("Attack UR 1") / _animSpeed;
                     _context.playerMovement.OnWallGrab += Grabwall;
                     break;
                 }
@@ -52,7 +52,7 @@ public class PlayerAttackState : PlayerState
                 {
                     attackTrigger = "Down attack";
                     _animSpeed = _context.animationManager.GetAnimationSpeed("Attack DR 1");
-                    _animLength = _context.animationManager.GetAnimationLength("Attack DR 1") / _animSpeed;
+                    _animLength = _context.animationManager.GetAnimationLengthRaw("Attack DR 1") / _animSpeed;
                     break;
                 }
         }

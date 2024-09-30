@@ -12,7 +12,7 @@ public class PlayerContext
     public PlayerMovement playerMovement;
     public AnimationManager animationManager;
     public PlayerSpearWallGrab spearWallGrab;
-   // public PlayerChecks checks;
+    public PlayerChecks checks;
     public PlayerCombat combat;
     public PlayerCombat.AttackModifiers attackModifier;
     public PlayerAnimationsEvents animationEvents;
