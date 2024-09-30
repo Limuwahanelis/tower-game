@@ -48,7 +48,6 @@ public class PlayerInAirState : PlayerState
     private void Grabwall(Vector3 tilePos)
     {
         _context.playerMovement.OnWallGrab -= Grabwall;
-        Debug.Break();
         _context.spearWallGrab.SetWallGrab(false);
         _context.climbTilePos = tilePos;
         _stateTypeToChangeFromInputCommand = null;
