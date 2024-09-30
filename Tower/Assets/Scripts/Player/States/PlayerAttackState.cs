@@ -45,6 +45,7 @@ public class PlayerAttackState : PlayerState
                     attackTrigger = "Up attack";
                     _animSpeed = _context.animationManager.GetAnimationSpeed("Attack UR 1");
                     _animLength = _context.animationManager.GetAnimationLength("Attack UR 1") / _animSpeed;
+                    _context.playerMovement.OnWallGrab += Grabwall;
                     break;
                 }
             case PlayerCombat.AttackModifiers.DOWN_ARROW:
@@ -58,6 +59,12 @@ public class PlayerAttackState : PlayerState
         _context.animationManager.Animator.SetTrigger(attackTrigger);
         _context.combat.OnAttackEnded += AttackEnd;
     }
+    private void Grabwall(Vector3 tilePos)
+    {
+        _context.playerMovement.OnWallGrab -= Grabwall;
+        _context.climbTilePos = tilePos;
+        ChangeState(PlayerWallGrabbigState.StateType);
+    }
     private void AttackEnd()
     {
         _context.combat.OnAttackEnded -= AttackEnd;
@@ -65,6 +72,7 @@ public class PlayerAttackState : PlayerState
     }
     public override void InterruptState()
     {
-     
+        _context.combat.OnAttackEnded -= AttackEnd;
+        _context.playerMovement.OnWallGrab -= Grabwall;
     }
 }

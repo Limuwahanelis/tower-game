@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerMovement _playerMovement;
     //[SerializeField] PlayerChecks _playerChecks;
     [SerializeField] PlayerCombat _playerCombat;
+    [SerializeField] PlayerAnimationsEvents _playerAnimationsEvents;
+    [SerializeField] PlayerSpearWallGrab _playerSpearWallGrab;
     //[SerializeField] PlayerCollisions _playerCollisions;
     //[SerializeField] PlayerDodge _playerDodge;
     [SerializeField] PlayerHealthSystem _playerHealthSystem;
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour
             playerMovement = _playerMovement,
             WaitAndPerformFunction = WaitAndExecuteFunction,
             WaitFrameAndPerformFunction = WaitFrameAndExecuteFunction,
+            animationEvents = _playerAnimationsEvents,
+            spearWallGrab = _playerSpearWallGrab,
             //coroutineHolder = this,
             //shadowControlModeSelectionUI = _shadowControlModeSelectionUI,
             //checks = _playerChecks,

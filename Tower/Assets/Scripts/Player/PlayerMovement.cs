@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsPlayerFalling { get => _rb.velocity.y < 0; }
     public Rigidbody2D PlayerRB => _rb;
     public int FlipSide => _flipSide;
+    public Action<Vector3> OnWallGrab;
     private playerDirection _newPlayerDirection;
     private playerDirection _oldPlayerDirection;
     [SerializeField] float _playerSpeed;
@@ -33,6 +35,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _jumpSpeedMultiplier;
     [SerializeField] PhysicsMaterial2D _noFrictionMat;
     [SerializeField] PhysicsMaterial2D _normalMaterial;
+    [Header("Wall grab")]
+    [SerializeField] Collider2D _spearWallGrabCol;
+    [SerializeField] List<GameObject> _wallGrabSprites;
+    [SerializeField] Transform _mainBody;
     private float _previousDirection;
     private int _flipSide = 1;
     public void Move(float direction, bool inAir = false)
@@ -100,6 +106,30 @@ public class PlayerMovement : MonoBehaviour
     public void SetRBVelocity(Vector2 velocity)
     {
         _rb.velocity = velocity;
+    }
+    // used by event on grab tilemap
+    public void SetUpForClimb(Vector3Int tilePos,bool left)
+    {
+        SetRB(false);
+        transform.position = new Vector3(tilePos.x + (left? 2.5f :- 1.5f), tilePos.y + 0.2f);
+        Vector3 ClimbPos = new Vector3(tilePos.x + (left ? 0.5f : 0.5f), tilePos.y + 1.5f);
+        _spearWallGrabCol.enabled = false;
+        OnWallGrab?.Invoke(ClimbPos);
+    }
+    public void UnparentSpirtes()
+    {
+        for(int i=0;i<_wallGrabSprites.Count;i++)
+        {
+            _wallGrabSprites[i].transform.SetParent(null);
+        }
+    }
+    public void ParentSpirtes()
+    {
+        for (int i = 0; i < _wallGrabSprites.Count; i++)
+        {
+            _wallGrabSprites[i].transform.SetParent(_mainBody);
+            _wallGrabSprites[i].transform.localPosition = Vector3.zero;
+        }
     }
     //public void PushPlayer(PushInfo pushInfo)
     //{
