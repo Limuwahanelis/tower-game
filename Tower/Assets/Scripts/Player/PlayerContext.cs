@@ -17,6 +17,7 @@ public class PlayerContext
     public PlayerCombat.AttackModifiers attackModifier;
     public PlayerAnimationsEvents animationEvents;
     public Vector3 climbTilePos;
+    public PlayerSpearController spearController;
    // public PlayerCollisions collisions;
    // public PlayerDodge playerDodge;
 }

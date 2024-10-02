@@ -7,16 +7,11 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
 
-    public enum ShadowControlInputs
-    {
-        CONTROL=1, TRANSMUTATE,MOVE,PLACE,ENTER,SHADOW_SPIKE
-    }
     [SerializeField] PlayerController _player;
     [SerializeField] InputActionAsset _controls;
     [SerializeField] bool _useCommands;
     [SerializeField] PlayerInputStack _inputStack;
     private Vector2 _direction;
-    ShadowControlInputs shadowModifier;
     //Start is called before the first frame update
     void Start()
     {
@@ -48,11 +43,6 @@ public class PlayerInputHandler : MonoBehaviour
         else _player.CurrentPlayerState.Jump();
 
     }
-    //void OnVertical(InputValue value)
-    //{
-    //    _direction = value.Get<Vector2>();
-    //    Logger.Log(_direction);
-    //}
     private void OnAttack(InputValue value)
     {
        // if (PauseSettings.IsGamePaused) return;
@@ -70,11 +60,12 @@ public class PlayerInputHandler : MonoBehaviour
             else if (_direction.y < 0) _player.CurrentPlayerState.Attack(PlayerCombat.AttackModifiers.DOWN_ARROW);
         }
     }
-    //private void OnControlShadow(InputValue value)
-    //{
-    //    if (PauseSettings.IsGamePaused) return;
-    //    shadowModifier = (ShadowControlInputs)value.Get<float>();
-    //    if (_useCommands) _inputStack.CurrentCommand = new ShadowControlInputCommand(_player.CurrentPlayerState, shadowModifier);
-    //    else _player.CurrentPlayerState.ControlShadow(shadowModifier);
-    //}
+    private void OnHarpoon(InputValue value)
+    {
+        _player.CurrentPlayerState.ThrowSpear();
+        //if (PlayerAbilities.UnlockedAbilities[((int)PlayerAbilities.Abilites.HARPOON)]) 
+        //{
+
+        //}
+    }
 }

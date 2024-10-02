@@ -22,6 +22,11 @@ public class PlayerAttackState : PlayerState
     public override void SetUpState(PlayerContext context)
     {
         base.SetUpState(context);
+        if(!_context.spearController.CanAttack)
+        {
+            ChangeState(PlayerIdleState.StateType);
+            return;
+        }
         SetAttack(context.attackModifier);
     }
     public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)

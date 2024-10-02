@@ -22,6 +22,11 @@ public class PlayerMovingState : PlayerState
         _context.attackModifier=modifier;
         ChangeState(PlayerAttackState.StateType);
     }
+    public override void ThrowSpear(AttackModifiers modifier = AttackModifiers.NONE)
+    {
+        base.ThrowSpear(modifier);
+        _context.spearController.Throw(_context.playerMovement.FlipSide * Vector3.right);
+    }
 
     public override void Move(Vector2 direction)
     {

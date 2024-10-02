@@ -18,6 +18,11 @@ public class PlayerIdleState : PlayerState
         _context.attackModifier = modifier;
         ChangeState(PlayerAttackState.StateType);
     }
+    public override void ThrowSpear(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
+    {
+        base.ThrowSpear(modifier);
+        _context.spearController.Throw(_context.playerMovement.FlipSide * Vector3.right);
+    }
     public override void Jump()
     {
         ChangeState(PlayerJumpingState.StateType);

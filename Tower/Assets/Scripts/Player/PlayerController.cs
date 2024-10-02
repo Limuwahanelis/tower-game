@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] PlayerCollisions _playerCollisions;
     //[SerializeField] PlayerDodge _playerDodge;
     [SerializeField] PlayerHealthSystem _playerHealthSystem;
+    [SerializeField] PlayerSpearController _playerSpearController;
     //[SerializeField] ShadowSpikeSkill _shadowSpikeSkill;
     [SerializeField] GameObject _gameOverPanel;
     private PlayerState _currentPlayerState;
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
             WaitFrameAndPerformFunction = WaitFrameAndExecuteFunction,
             animationEvents = _playerAnimationsEvents,
             spearWallGrab = _playerSpearWallGrab,
+            spearController = _playerSpearController,
             //coroutineHolder = this,
             //shadowControlModeSelectionUI = _shadowControlModeSelectionUI,
             checks = _playerChecks,
