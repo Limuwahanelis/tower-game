@@ -13,10 +13,16 @@ public class SpearChain : MonoBehaviour
     {
         
     }
+    private void Update()
+    {
+
+    }
     public void CheckSegmentsForward()
     {
+        transform.up = (transform.position - _chainStart.position).normalized;
         if (Vector2.Distance(_chainStart.position, transform.position) > _distanceToShowNewChainSegment * (_segments+1))
         {
+            Logger.Log(_distanceToShowNewChainSegment);
             if (_segments < _chainSegments.Count)
             {
                 _chainSegments[_segments].SetActive(true);
@@ -27,6 +33,7 @@ public class SpearChain : MonoBehaviour
     }
     public void CheckSegmentsback()
     {
+        transform.up = (transform.position - _chainStart.position).normalized;
         if (Vector2.Distance(_chainStart.position, transform.position) < _distanceToShowNewChainSegment * (_segments))
         {
             if (_segments >0 )
@@ -36,5 +43,13 @@ public class SpearChain : MonoBehaviour
                 
             }
         }
+    }
+    public void ResetChain()
+    {
+        for (int i = 0; i <_chainSegments.Count;i++)
+        {
+            _chainSegments[i].SetActive(false);
+        }
+        _segments = 0;
     }
 }

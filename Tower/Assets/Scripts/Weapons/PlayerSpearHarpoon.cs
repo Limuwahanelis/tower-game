@@ -33,8 +33,8 @@ public class PlayerSpearHarpoon : MonoBehaviour
                 if (Vector2.Distance(_spearHolder.position, transform.position) < 3.8f)
                 {
                     transform.position += _throwDirection * Time.deltaTime * _throwSpeed;
-                    //_spearChain.transform.position = transform.position + _chainOffset;
-                    // _spearChain.CheckSegmentsForward();
+                    _spearChain.transform.position = transform.position + _chainOffset;
+                     _spearChain.CheckSegmentsForward();
                 }
                 else
                 {
@@ -52,13 +52,15 @@ public class PlayerSpearHarpoon : MonoBehaviour
                     Vector3 dir = (_spearHolder.position - transform.position).normalized;
                     transform.position += dir * Time.deltaTime * _throwSpeed;
                     transform.up = -dir;
-                    //_spearChain.transform.position = transform.position + _chainOffset;
-                    // _spearChain.CheckSegmentsback();
+                    _spearChain.transform.position = transform.position + _chainOffset;
+                     _spearChain.CheckSegmentsback();
                 }
                 else
                 {
                     _isComingBack = false;
                     _isThrown = false;
+                    _spearChain.transform.localPosition = Vector3.zero;
+                    _spearChain.ResetChain();
                     transform.position = _spearHolder.position;
                     transform.SetParent(_player);
                     transform.localRotation = Quaternion.Euler(0, 0, -90);
