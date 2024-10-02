@@ -22,12 +22,10 @@ public class SpearChain : MonoBehaviour
         transform.up = (transform.position - _chainStart.position).normalized;
         if (Vector2.Distance(_chainStart.position, transform.position) > _distanceToShowNewChainSegment * (_segments+1))
         {
-            Logger.Log(_distanceToShowNewChainSegment);
             if (_segments < _chainSegments.Count)
             {
                 _chainSegments[_segments].SetActive(true);
                 _segments++;
-                //if (_segments == _chainSegments.Count) _segments--;
             }
         }
     }

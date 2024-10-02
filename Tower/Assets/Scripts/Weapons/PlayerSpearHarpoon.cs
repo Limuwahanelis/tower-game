@@ -32,7 +32,11 @@ public class PlayerSpearHarpoon : MonoBehaviour
             {
                 if (Vector2.Distance(_spearHolder.position, transform.position) < 3.8f)
                 {
+
+                    Vector3 dir = (_spearHolder.position - transform.position).normalized;
+                   
                     transform.position += _throwDirection * Time.deltaTime * _throwSpeed;
+                    if(dir!=Vector3.zero) transform.up = -dir;
                     _spearChain.transform.position = transform.position + _chainOffset;
                      _spearChain.CheckSegmentsForward();
                 }
@@ -86,23 +90,25 @@ public class PlayerSpearHarpoon : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        _hasHitEnemy = true;
         IPullable pull = collision.GetComponent<IPullable>();
         if (pull!=null)
         {
             _pulledObject = pull;
             _pulledObject.StartPull(transform);
-            _hasHitEnemy = true;
+          
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        _hasHitEnemy = true;
         if (_pulledObject != null) return;
         IPullable pull = collision.GetComponent<IPullable>();
         if (pull != null)
         {
             _pulledObject = pull;
             _pulledObject.StartPull(transform);
-            _hasHitEnemy = true;
+            
         }
     }
 }

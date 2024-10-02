@@ -31,18 +31,15 @@ public class PlayerSpearWallGrab : MonoBehaviour
                 if (_tiles.GetTileAtPos(new Vector3(_checkPos.position.x + 0.4f, _checkPos.position.y), out Vector3Int tilePos))
                 {
                     if (_playerMovement.FlipSide == ((int)PlayerMovement.playerDirection.LEFT)) return;
-                    Logger.Log(_checkPos.position.y - tilePos.y);
                     if (_checkPos.position.y - tilePos.y > 0.8f)
                     {
                         _canGrab = false;
-                        Logger.Log("RIGHT");
                         OnClimb?.Invoke(tilePos, false);
                     }
                 }
                 else if (_tiles.GetTileAtPos(new Vector3(_checkPos.position.x - 0.4f, _checkPos.position.y), out tilePos))
                 {
                     if (_playerMovement.FlipSide == ((int)PlayerMovement.playerDirection.RIGHT)) return;
-                    Logger.Log(_checkPos.position.y - tilePos.y);
                     if (_checkPos.position.y - tilePos.y > 0.8f)
                     {
                         _canGrab = false;
