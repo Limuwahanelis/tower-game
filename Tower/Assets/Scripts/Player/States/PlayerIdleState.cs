@@ -18,6 +18,18 @@ public class PlayerIdleState : PlayerState
         _context.attackModifier = modifier;
         ChangeState(PlayerAttackState.StateType);
     }
+    public override void ThrowSpear(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
+    {
+        base.ThrowSpear(modifier);
+        switch (modifier)
+        {
+            case PlayerCombat.AttackModifiers.NONE: _context.spearController.Throw(_context.playerMovement.FlipSide * Vector3.right); break;
+            case PlayerCombat.AttackModifiers.UP_ARROW: _context.spearController.Throw( new Vector3(1* _context.playerMovement.FlipSide , 1, 0).normalized); break;
+            case PlayerCombat.AttackModifiers.DOWN_ARROW: _context.spearController.Throw(new Vector3(1 * _context.playerMovement.FlipSide, -1,0)); break;
+        }
+
+        
+    }
     public override void Jump()
     {
         ChangeState(PlayerJumpingState.StateType);
@@ -32,6 +44,7 @@ public class PlayerIdleState : PlayerState
         base.SetUpState(context);
         //_context.animationManager.PlayAnimation("Idle");
         _context.animationManager.Animator.SetBool("Move", false);
+        ExecuteSetUpCommand();
     }
 
     public override void InterruptState()

@@ -17,6 +17,6 @@ public class MoveInputCommand : InputCommand
 
     public override void Undo()
     {
-        _playerState.UndoComand();
+        _playerState.UndoComand(typeof(MoveInputCommand));
     }
 }
