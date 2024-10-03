@@ -45,6 +45,10 @@ public class PlayerInAirState : PlayerState
         }
        else _stateTypeToChangeFromInputCommand = PlayerAttackState.StateType;
     }
+    public override void ThrowSpear(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
+    {
+        SetCommandOnNextSetUp(new HarpoonAttackInputCommand(this, modifier));
+    }
     private void Grabwall(Vector3 tilePos)
     {
         _context.playerMovement.OnWallGrab -= Grabwall;
@@ -61,8 +65,9 @@ public class PlayerInAirState : PlayerState
     {
         _context.playerMovement.Move(direction.x, true);
     }
-    public override void UndoComand()
+    public override void UndoComand(Type inputCommand)
     {
+        if (inputCommand == typeof(HarpoonAttackInputCommand)) SetCommandOnNextSetUp(null);
         _stateTypeToChangeFromInputCommand = null;
     }
     public override void InterruptState()

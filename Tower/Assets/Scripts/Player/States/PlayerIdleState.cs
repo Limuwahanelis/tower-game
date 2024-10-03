@@ -44,6 +44,7 @@ public class PlayerIdleState : PlayerState
         base.SetUpState(context);
         //_context.animationManager.PlayAnimation("Idle");
         _context.animationManager.Animator.SetBool("Move", false);
+        ExecuteSetUpCommand();
     }
 
     public override void InterruptState()

@@ -62,9 +62,19 @@ public class PlayerInputHandler : MonoBehaviour
     }
     private void OnHarpoon(InputValue value)
     {
-        if (_direction.y == 0) _player.CurrentPlayerState.ThrowSpear();
-        else if (_direction.y > 0) _player.CurrentPlayerState.ThrowSpear(PlayerCombat.AttackModifiers.UP_ARROW);
-        else if (_direction.y < 0) _player.CurrentPlayerState.ThrowSpear(PlayerCombat.AttackModifiers.DOWN_ARROW);
+        if (!PlayerAbilities.UnlockedAbilities[((int)PlayerAbilities.Abilites.HARPOON)]) return;
+        if (_useCommands)
+        {
+            _inputStack.CurrentCommand = new HarpoonAttackInputCommand(_player.CurrentPlayerState);
+            if (_direction.y > 0) _inputStack.CurrentCommand = new HarpoonAttackInputCommand(_player.CurrentPlayerState, PlayerCombat.AttackModifiers.UP_ARROW);
+            if (_direction.y < 0) _inputStack.CurrentCommand = new HarpoonAttackInputCommand(_player.CurrentPlayerState, PlayerCombat.AttackModifiers.DOWN_ARROW);
+        }
+        else
+        {
+            if (_direction.y == 0) _player.CurrentPlayerState.ThrowSpear();
+            else if (_direction.y > 0) _player.CurrentPlayerState.ThrowSpear(PlayerCombat.AttackModifiers.UP_ARROW);
+            else if (_direction.y < 0) _player.CurrentPlayerState.ThrowSpear(PlayerCombat.AttackModifiers.DOWN_ARROW);
+        }
         //if (PlayerAbilities.UnlockedAbilities[((int)PlayerAbilities.Abilites.HARPOON)]) 
         //{
 

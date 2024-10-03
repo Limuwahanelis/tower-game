@@ -9,6 +9,7 @@ public abstract class InputCommand
     {
         _playerState = playerState;
     }
+    public virtual void Execute(PlayerState state) { }
     public abstract void Execute();
 
     public abstract void Undo();

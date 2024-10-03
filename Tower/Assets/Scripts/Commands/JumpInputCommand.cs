@@ -15,6 +15,6 @@ public class JumpInputCommand : InputCommand
 
     public override void Undo()
     {
-        _playerState.UndoComand();
+        _playerState.UndoComand(typeof(JumpInputCommand));
     }
 }

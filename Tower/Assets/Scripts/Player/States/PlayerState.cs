@@ -7,8 +7,9 @@ public abstract class PlayerState
     public delegate PlayerState GetState(Type state);
     protected PlayerContext _context;
     protected GetState _getType;
-    protected InputCommand _inputCommand;
     protected Type _stateTypeToChangeFromInputCommand;
+    protected InputCommand _inputCommand;
+    protected static InputCommand _inputCommandToExecuteOnNextStateSetup;
     public PlayerState(GetState function)
     {
         _getType = function;
@@ -34,7 +35,7 @@ public abstract class PlayerState
         _context.ChangePlayerState(state);
         state.SetUpState(_context);
     }
-    public virtual void UndoComand() { }
+    public virtual void UndoComand(Type inputcommand) { }
     public void SetInputCommand(ref InputCommand command)
     {
         _inputCommand = command;
@@ -45,5 +46,15 @@ public abstract class PlayerState
         _inputCommand.Execute();
         _inputCommand = null;
         return true;
+    }
+    protected void SetCommandOnNextSetUp(InputCommand command)
+    {
+        _inputCommandToExecuteOnNextStateSetup = command;
+    }
+    protected void ExecuteSetUpCommand()
+    {
+        if (_inputCommandToExecuteOnNextStateSetup == null) return;
+        _inputCommandToExecuteOnNextStateSetup.Execute(this);
+        _inputCommandToExecuteOnNextStateSetup = null;
     }
 }

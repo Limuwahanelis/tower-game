@@ -40,7 +40,7 @@ public class PlayerJumpingState : PlayerState
     {
     }
 
-    public override void UndoComand()
+    public override void UndoComand(Type inputcommand)
     {
 
     }

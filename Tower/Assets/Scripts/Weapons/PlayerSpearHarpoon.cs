@@ -14,10 +14,11 @@ public class PlayerSpearHarpoon : MonoBehaviour
     [SerializeField] float _maxThrowRange = 3.8f;
     [SerializeField] float _throwSpeed;
     [SerializeField] SpearChain _spearChain;
+    [SerializeField] Transform _harpoonTip;
     IPullable _pulledObject;
     private Vector3 _throwDirection;
     private bool _isComingBack = false;
-    private bool _hasHitEnemy = false;
+    private bool _hasHitSomething = false;
     private Vector3 _chainOffset;
     private bool _isThrown = false;
     private void Start()
@@ -32,11 +33,14 @@ public class PlayerSpearHarpoon : MonoBehaviour
             {
                 if (Vector2.Distance(_spearHolder.position, transform.position) < 3.8f)
                 {
-
-                    Vector3 dir = (_spearHolder.position - transform.position).normalized;
+                    Vector3 dir = (_spearHolder.position - transform.position);
+                    Vector3 dirNor = dir.normalized;
+                   //float angle= Vector2.SignedAngle(dirNor, new Vector2(_spearHolder.position.x,_spearHolder.position.y- transform.position.y));
+                   // Logger.Log(angle);
+                   // transform.RotateAround(_harpoonTip.position, _spearHolder.forward, -angle);
                    
                     transform.position += _throwDirection * Time.deltaTime * _throwSpeed;
-                    if(dir!=Vector3.zero) transform.up = -dir;
+                    if(dir!=Vector3.zero) transform.up = -dirNor;
                     _spearChain.transform.position = transform.position + _chainOffset;
                      _spearChain.CheckSegmentsForward();
                 }
@@ -44,7 +48,7 @@ public class PlayerSpearHarpoon : MonoBehaviour
                 {
                     _isComingBack = true;
                 }
-                if (_hasHitEnemy)
+                if (_hasHitSomething)
                 {
                     _isComingBack = true;
                 }
@@ -53,8 +57,12 @@ public class PlayerSpearHarpoon : MonoBehaviour
             {
                 if (Vector2.Distance(_spearHolder.position, transform.position) > 0.1f)
                 {
-                    Vector3 dir = (_spearHolder.position - transform.position).normalized;
-                    transform.position += dir * Time.deltaTime * _throwSpeed;
+                    Vector3 dir = (_spearHolder.position - transform.position);
+                    Vector3 dirNor = dir.normalized;
+                    transform.position += dirNor * Time.deltaTime * _throwSpeed;
+                    //float angle = Vector2.SignedAngle(dirNor, new Vector2(_spearHolder.position.x, _spearHolder.position.y - transform.position.y));
+                    //Logger.Log(angle);
+                    //transform.RotateAround(_harpoonTip.position, _spearHolder.forward, -angle);
                     transform.up = -dir;
                     _spearChain.transform.position = transform.position + _chainOffset;
                      _spearChain.CheckSegmentsback();
@@ -69,7 +77,7 @@ public class PlayerSpearHarpoon : MonoBehaviour
                     transform.SetParent(_player);
                     transform.localRotation = Quaternion.Euler(0, 0, -90);
                     StopPull();
-                    _hasHitEnemy = false;
+                    _hasHitSomething = false;
                     OnHarpoonReturned?.Invoke();
                 }
             }
@@ -90,7 +98,7 @@ public class PlayerSpearHarpoon : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _hasHitEnemy = true;
+        _hasHitSomething = true;
         IPullable pull = collision.GetComponent<IPullable>();
         if (pull!=null)
         {
@@ -101,7 +109,7 @@ public class PlayerSpearHarpoon : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        _hasHitEnemy = true;
+        _hasHitSomething = true;
         if (_pulledObject != null) return;
         IPullable pull = collision.GetComponent<IPullable>();
         if (pull != null)

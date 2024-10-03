@@ -25,7 +25,12 @@ public class PlayerMovingState : PlayerState
     public override void ThrowSpear(AttackModifiers modifier = AttackModifiers.NONE)
     {
         base.ThrowSpear(modifier);
-        _context.spearController.Throw(_context.playerMovement.FlipSide * Vector3.right);
+        switch (modifier)
+        {
+            case PlayerCombat.AttackModifiers.NONE: _context.spearController.Throw(_context.playerMovement.FlipSide * Vector3.right); break;
+            case PlayerCombat.AttackModifiers.UP_ARROW: _context.spearController.Throw(new Vector3(1 * _context.playerMovement.FlipSide, 1, 0).normalized); break;
+            case PlayerCombat.AttackModifiers.DOWN_ARROW: _context.spearController.Throw(new Vector3(1 * _context.playerMovement.FlipSide, -1, 0)); break;
+        }
     }
 
     public override void Move(Vector2 direction)
