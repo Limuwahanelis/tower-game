@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SImpleEnemyController : MonoBehaviour,IPullable
+public class PullComponent : MonoBehaviour,IPullable
 {
     private Transform _puller; 
     private bool _isBeingPulled = false;
@@ -18,13 +18,6 @@ public class SImpleEnemyController : MonoBehaviour,IPullable
         _pullOffset= _puller.position-transform.position;
         _isBeingPulled = true;
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

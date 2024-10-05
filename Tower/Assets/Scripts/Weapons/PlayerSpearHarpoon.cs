@@ -112,6 +112,8 @@ public class PlayerSpearHarpoon : MonoBehaviour
         _hasHitSomething = true;
         if (_pulledObject != null) return;
         IPullable pull = collision.GetComponent<IPullable>();
+        if(pull==null) pull = collision.GetComponentInParent<IPullable>();
+        if (pull == null) pull = collision.attachedRigidbody.GetComponent<IPullable>();
         if (pull != null)
         {
             _pulledObject = pull;
