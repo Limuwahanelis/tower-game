@@ -11,15 +11,15 @@ public class #SCRIPTNAME# : EnemyState
     {
     }
 
-    public override void Update()
-    {
-
-    }
-
     public override void SetUpState(EnemyContext context)
     {
         base.SetUpState(context);
         _context = (#ENEMYNAME#Context)context;
+    }
+
+    public override void Update()
+    {
+
     }
 
     public override void InterruptState()

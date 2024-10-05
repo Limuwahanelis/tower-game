@@ -15,9 +15,9 @@ TagManager:
   - Wall
   - Chain
   - Enemy
-  - 
-  - 
-  - 
+  - PlayerDetection
+  - Ground
+  - PlayerCore
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Chain
+    uniqueID: 2506360471
+    locked: 0
+  - name: Enemy
+    uniqueID: 399373199
+    locked: 0
+  - name: Weapon
+    uniqueID: 2036058541
+    locked: 0
+  - name: Health bars
+    uniqueID: 2390713843
     locked: 0

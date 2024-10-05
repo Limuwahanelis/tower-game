@@ -42,7 +42,7 @@ public class HealthSystem : MonoBehaviour,IDamagable
         if (_hpBar != null) _hpBar.SetHealth(_currentHP);
         OnHitEvent?.Invoke(info);
         StartCoroutine(DamageInvincibilityCor());
-        if (_currentHP <= 0) Kill();
+        if (_currentHP <= 0) Kill(info);
     }
     /// <summary>
     /// Deals damage wihtout rasing any events.
@@ -53,25 +53,25 @@ public class HealthSystem : MonoBehaviour,IDamagable
         if (!IsAlive) return;
         _currentHP -= info.dmg;
         _hpBar.SetHealth(_currentHP);
-        if (_currentHP <= 0) Kill();
+        if (_currentHP <= 0) Kill(info);
     }
     protected bool IsDeathEventSubscribedTo()
     {
         if (OnDeath == null) return false;
          return true;
     }
-    protected void InvokeOnDeathEvent()
+    protected void InvokeOnDeathEvent(DamageInfo info)
     {
-        OnDeath?.Invoke(this);
+        OnDeath?.Invoke(this,info);
     }
-    public virtual void Kill()
+    public virtual void Kill(DamageInfo info)
     {
         if (!IsDeathEventSubscribedTo())
         {
             Destroy(gameObject);
             if(_hpBar!=null) Destroy(_hpBar.gameObject);
         }
-        else OnDeath?.Invoke(this);
+        else OnDeath?.Invoke(this,info);
     }
     IEnumerator DamageInvincibilityCor()
     {

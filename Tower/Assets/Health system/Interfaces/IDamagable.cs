@@ -7,8 +7,8 @@ using UnityEngine;
 
 public interface IDamagable
 {
-    public delegate void OnDeathEventHandler(IDamagable damagable);
+    public delegate void OnDeathEventHandler(IDamagable damagable, DamageInfo info);
     public event OnDeathEventHandler OnDeath;
     void TakeDamage(DamageInfo info);
-    void Kill();
+    void Kill(DamageInfo info);
 }
