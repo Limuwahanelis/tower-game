@@ -10,6 +10,7 @@ public class CutlassEnemyController : EnemyController
     [SerializeField] EnemyMovement _movement;
     [SerializeField] ObjectDetection _playerFrontDetection;
     [SerializeField] ObjectDetection _playerChaseDetection;
+    [SerializeField] ObjectDetection _playerStopChaseDetection;
     protected CutlassEnemyContext _context;
     private EnemyState _pushedState;
 
@@ -31,6 +32,7 @@ public class CutlassEnemyController : EnemyController
             movement= _movement,
             playerFrontDetection= _playerFrontDetection,
             playerChaseDetection= _playerChaseDetection,
+            playerChaseStopDetection= _playerStopChaseDetection,
             spawnPoint=transform.position,
         };
         EnemyState.GetState getState = GetState;
@@ -46,6 +48,10 @@ public class CutlassEnemyController : EnemyController
     void Update()
     {
         _currentEnemyState?.Update();
+    }
+    private void FixedUpdate()
+    {
+        _currentEnemyState.FixedUpdate();
     }
     public void Push(PushInfo info)
     {

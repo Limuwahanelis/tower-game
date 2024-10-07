@@ -19,10 +19,9 @@ public class CutlassEnemyStateGoBackToSpawn : EnemyState
         _context.playerFrontDetection.OnObjectDetectedUnity.AddListener(AttackPlauer);
         _context.playerChaseDetection.OnObjectDetectedUnity.AddListener(ChasePlayer);
     }
-
-    public override void Update()
+    public override void FixedUpdate()
     {
-        if (math.abs(_context.enemyTransform.position.x- _context.spawnPoint.x) > 0.01f)
+        if (math.abs(_context.enemyTransform.position.x - _context.spawnPoint.x) > 0.01f)
         {
             if (_context.enemyTransform.position.x < _context.spawnPoint.x) _context.movement.Move(Vector2.right);
             else _context.movement.Move(Vector2.left);
@@ -42,5 +41,10 @@ public class CutlassEnemyStateGoBackToSpawn : EnemyState
     {
         _context.playerFrontDetection.OnObjectDetectedUnity.RemoveListener(AttackPlauer);
         _context.playerChaseDetection.OnObjectDetectedUnity.RemoveListener(ChasePlayer);
+    }
+
+    public override void Update()
+    {
+        
     }
 }

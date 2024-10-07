@@ -45,6 +45,18 @@ public class EnemyMovement : MonoBehaviour
         _enemy.MainBody.transform.localScale = _mainbodyScale;
         _flipSide = -_flipSide;
     }
+    /// <summary>
+    /// Use non same side.
+    /// </summary>
+    /// <param name="flipSide"></param>
+    public void FlipEnemy(GlobalEnums.HorizontalDirections flipSide)
+    {
+        _mainbodyScale.x = ((int)flipSide);
+        _mainbodyScale.y = _enemy.MainBody.transform.localScale.y;
+        _mainbodyScale.z = _enemy.MainBody.transform.localScale.z;
+        _enemy.MainBody.transform.localScale = _mainbodyScale;
+        _flipSide = ((int)flipSide);
+    }
     public void Stop()
     {
         _rb.velocity = Vector3.zero;

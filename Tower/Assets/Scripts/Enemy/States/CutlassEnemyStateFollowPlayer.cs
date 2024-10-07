@@ -16,17 +16,28 @@ public class CutlassEnemyStateFollowPlayer : EnemyState
         base.SetUpState(context);
         _context = (CutlassEnemyContext)context;
         _context.chasePlayer = true;
-        _context.playerChaseDetection.OnObjectLeftdUnity.AddListener(PlayerLeft);
+        _context.playerChaseStopDetection.OnObjectLeftdUnity.AddListener(PlayerLeft);
         _context.playerFrontDetection.OnObjectDetectedUnity.AddListener(PlayerInAttackRange);
     }
-
-    public override void Update()
+    public override void FixedUpdate()
     {
-        if (_context.enemyTransform.position.x < _context.playerTransform.position.x) _context.movement.Move(Vector2.right);
-        else _context.movement.Move(Vector2.left);
+        if (Math.Abs(_context.enemyTransform.position.x - _context.playerTransform.position.x) < 0.7f)
+        {
+            if (_context.enemyTransform.position.x < _context.playerTransform.position.x) _context.movement.FlipEnemy(GlobalEnums.HorizontalDirections.RIGHT);
+            else _context.movement.FlipEnemy(GlobalEnums.HorizontalDirections.LEFT);
+            //_context.attackPlayer = true;
+            //_context.chasePlayer = false;
+            //ChangeState(CutlassEnemyStateIdle.StateType);
+        }
+        else
+        {
+            if (_context.enemyTransform.position.x < _context.playerTransform.position.x) _context.movement.Move(Vector2.right);
+            else _context.movement.Move(Vector2.left);
+        }
     }
     private void PlayerInAttackRange()
     {
+        Logger.Log("Attack");
         _context.attackPlayer = true;
         _context.chasePlayer = false;
         ChangeState(CutlassEnemyStateIdle.StateType);
@@ -39,7 +50,12 @@ public class CutlassEnemyStateFollowPlayer : EnemyState
     }
     public override void InterruptState()
     {
-        _context.playerChaseDetection.OnObjectLeftdUnity.RemoveListener(PlayerLeft);
+        _context.playerChaseStopDetection.OnObjectLeftdUnity.RemoveListener(PlayerLeft);
         _context.playerFrontDetection.OnObjectDetectedUnity.RemoveListener(PlayerInAttackRange);
+    }
+
+    public override void Update()
+    {
+        
     }
 }
