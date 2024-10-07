@@ -2327,7 +2327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93095026bcdccc4eaadd969aeaf9d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dmg: 111
+  _dmg: 20
 --- !u!50 &630713626
 Rigidbody2D:
   serializedVersion: 4
@@ -3688,11 +3688,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2086930145}
-  - {fileID: 2096888122}
-  - {fileID: 394337603}
   - {fileID: 630713624}
-  - {fileID: 267813987}
+  - {fileID: 394337603}
   - {fileID: 812119372}
+  - {fileID: 2096888122}
+  - {fileID: 267813987}
   m_Father: {fileID: 50625916}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1367935434
@@ -4810,7 +4810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 1626315663}
-  _speed: 2
+  _speed: 4
   _enemy: {fileID: 1626315666}
   _pushHandle: {fileID: 1922709756}
   _pushForce: 8

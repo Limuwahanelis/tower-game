@@ -35,6 +35,7 @@ public class EnemyMovement : MonoBehaviour
             _flipSide = -1;
         }
         _rb.MovePosition(_rb.position + direction * _speed * Time.deltaTime);
+        //_rb.velocity = new Vector2(_speed * direction.x, _rb.velocity.y);
     }
     public void FlipEnemy()
     {
