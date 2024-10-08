@@ -31,7 +31,7 @@ public class PlayerHealthSystem : HealthSystem,IPushable
         if (!IsAlive) return;
         if (_isInvincibleAfterPush) return;
         OnPushed?.Invoke(pushInfo);
-        if (pushInfo.involvedColliders != null)
+        if (pushInfo.involvedColliders != null && pushInfo.involvedColliders.Length>0)
         {
             PreventCollisions(pushInfo.involvedColliders);
             StartCoroutine(PushCor(pushInfo.involvedColliders));

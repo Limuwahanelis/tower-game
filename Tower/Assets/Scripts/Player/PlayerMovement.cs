@@ -131,16 +131,16 @@ public class PlayerMovement : MonoBehaviour
             _wallGrabSprites[i].transform.localPosition = Vector3.zero;
         }
     }
-    //public void PushPlayer(PushInfo pushInfo)
-    //{
-    //    StopPlayer();
-    //    Vector2 pushDirection = _pushHandle.GetVector();
+    public void PushPlayer(PushInfo pushInfo)
+    {
+        StopPlayer();
+        Vector2 pushDirection = _pushHandle.GetVector();
 
-    //    if (!pushInfo.pushType.HasFlag(HealthSystem.DamageType.TRAPS))
-    //    {
-    //        if (HelperClass.CheckIfObjectIsBehind(transform.position, pushInfo.pushPosition, (GlobalEnums.HorizontalDirections)_flipSide)) pushDirection.x = -pushDirection.x;
-    //    }
-    //    _rb.AddForce(pushDirection * _pushForce, ForceMode2D.Impulse);
+        //if (!pushInfo..HasFlag(HealthSystem.DamageType.TRAPS))
+        //{
+           // if (HelperMethods.CheckIfObjectIsBehind(transform.position, pushInfo.pushPosition, (GlobalEnums.HorizontalDirections)_flipSide)) pushDirection.x = -pushDirection.x;
+        //}
+        _rb.AddForce(pushDirection * _pushForce, ForceMode2D.Impulse);
 
-    //}
+    }
 }

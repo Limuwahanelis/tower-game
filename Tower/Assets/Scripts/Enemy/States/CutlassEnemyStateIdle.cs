@@ -20,11 +20,20 @@ public class CutlassEnemyStateIdle : EnemyState
         _context.playerFrontDetection.OnObjectDetectedUnity.AddListener(PlayerEnteredAttackRange);
         _context.playerChaseDetection.OnObjectDetectedUnity.AddListener(ChasePlayer);
         _attackCD = 1f+_context.animMan.GetAnimationLength("Attack");
+        _context.movement.Stop();
         if (_context.chasePlayer)
         {
             _context.chasePlayer = false;
             ChangeState(CutlassEnemyStateFollowPlayer.StateType);
+            return;
         }
+        if (Vector2.Distance(_context.spawnPoint, _context.enemyTransform.position) > 0.1f && _context.attackPlayer == false)
+        {
+            ChangeState(CutlassEnemyStateGoBackToSpawn.StateType);
+            return;
+        }
+
+
     }
     public override void Update()
     {
@@ -46,7 +55,7 @@ public class CutlassEnemyStateIdle : EnemyState
     }
     private void ChasePlayer()
     {
-        //if(_context.attackPlayer)
+        if (_context.attackPlayer) return;
         ChangeState(CutlassEnemyStateFollowPlayer.StateType);
     }
     public override void InterruptState()

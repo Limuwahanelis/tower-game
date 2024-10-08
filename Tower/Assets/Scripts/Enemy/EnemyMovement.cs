@@ -35,6 +35,7 @@ public class EnemyMovement : MonoBehaviour
             _flipSide = -1;
         }
         _rb.MovePosition(_rb.position + direction * _speed * Time.deltaTime);
+        //_rb.velocity = new Vector2(_speed * direction.x, _rb.velocity.y);
     }
     public void FlipEnemy()
     {
@@ -43,6 +44,18 @@ public class EnemyMovement : MonoBehaviour
         _mainbodyScale.z = _enemy.MainBody.transform.localScale.z;
         _enemy.MainBody.transform.localScale = _mainbodyScale;
         _flipSide = -_flipSide;
+    }
+    /// <summary>
+    /// Use non same side.
+    /// </summary>
+    /// <param name="flipSide"></param>
+    public void FlipEnemy(GlobalEnums.HorizontalDirections flipSide)
+    {
+        _mainbodyScale.x = ((int)flipSide);
+        _mainbodyScale.y = _enemy.MainBody.transform.localScale.y;
+        _mainbodyScale.z = _enemy.MainBody.transform.localScale.z;
+        _enemy.MainBody.transform.localScale = _mainbodyScale;
+        _flipSide = ((int)flipSide);
     }
     public void Stop()
     {

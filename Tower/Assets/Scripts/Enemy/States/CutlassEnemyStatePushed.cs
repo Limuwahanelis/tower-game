@@ -38,7 +38,7 @@ public class CutlassEnemyStatePushed : EnemyState
         _context.playerFrontDetection.OnObjectLeftdUnity.AddListener(PlayerLeft);
         _context.playerFrontDetection.OnObjectDetectedUnity.AddListener(PlayerEnteredAttackRange);
         _context.playerChaseDetection.OnObjectDetectedUnity.AddListener(ChasePlayer);
-        _context.playerChaseDetection.OnObjectLeftdUnity.AddListener(StopChase);
+        _context.playerChaseStopDetection.OnObjectLeftdUnity.AddListener(StopChase);
 
     }
     private void PlayerLeft()
@@ -73,6 +73,6 @@ public class CutlassEnemyStatePushed : EnemyState
         _context.playerFrontDetection.OnObjectLeftdUnity.RemoveListener(PlayerLeft);
         _context.playerFrontDetection.OnObjectDetectedUnity.RemoveListener(PlayerEnteredAttackRange);
         _context.playerChaseDetection.OnObjectDetectedUnity.RemoveListener(ChasePlayer);
-        _context.playerChaseDetection.OnObjectLeftdUnity.RemoveListener(StopChase);
+        _context.playerChaseStopDetection.OnObjectLeftdUnity.RemoveListener(StopChase);
     }
 }
