@@ -21,7 +21,7 @@ public class CutlassEnemyStateGoBackToSpawn : EnemyState
     }
     public override void FixedUpdate()
     {
-        if (math.abs(_context.enemyTransform.position.x - _context.spawnPoint.x) > 0.01f)
+        if (math.abs(_context.enemyTransform.position.x - _context.spawnPoint.x) > 0.1f)
         {
             if (_context.enemyTransform.position.x < _context.spawnPoint.x) _context.movement.Move(Vector2.right);
             else _context.movement.Move(Vector2.left);

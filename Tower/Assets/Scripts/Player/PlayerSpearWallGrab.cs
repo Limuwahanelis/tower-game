@@ -11,7 +11,7 @@ public class PlayerSpearWallGrab : MonoBehaviour
     [SerializeField] LayerMask _ground;
     [SerializeField] HangableTile _tiles;
     [SerializeField] PlayerMovement _playerMovement;
-    public UnityEvent<Vector3Int, bool> OnClimb;
+    public UnityEvent<Vector3, bool,bool> OnClimb;
     Collider2D[] _results=new Collider2D[4];
     private bool _canGrab = false;
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class PlayerSpearWallGrab : MonoBehaviour
                     if (_checkPos.position.y - tilePos.y > 0.8f)
                     {
                         _canGrab = false;
-                        OnClimb?.Invoke(tilePos, false);
+                        OnClimb?.Invoke(tilePos, false,true);
                     }
                 }
                 else if (_tiles.GetTileAtPos(new Vector3(_checkPos.position.x - 0.4f, _checkPos.position.y), out tilePos))
@@ -44,7 +44,19 @@ public class PlayerSpearWallGrab : MonoBehaviour
                     {
                         _canGrab = false;
                         Logger.Log("FSAF");
-                        OnClimb?.Invoke(tilePos, true);
+                        OnClimb?.Invoke(tilePos, true, true);
+                    }
+                }
+                else if (_results[0].GetComponent<HangableObject>())
+                {
+                    if (_results[0].transform.position.x > _checkPos.position.x)
+                    {
+                        if (_playerMovement.FlipSide == ((int)PlayerMovement.playerDirection.LEFT)) return;
+                        if (_checkPos.position.y - _results[0].transform.position.y > 0.2f)
+                        {
+                            _canGrab = false;
+                            OnClimb?.Invoke(_results[0].transform.position, false, false);
+                        }
                     }
                 }
             }

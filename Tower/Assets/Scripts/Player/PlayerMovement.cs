@@ -107,12 +107,21 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb.velocity = velocity;
     }
-    // used by event on grab tilemap
-    public void SetUpForClimb(Vector3Int tilePos,bool left)
+    // used by event on player spear
+    public void SetUpForClimb(Vector3 tilePos,bool left,bool isTile)
     {
         SetRB(false);
-        transform.position = new Vector3(tilePos.x + (left? 2.5f :- 1.5f), tilePos.y + 0.2f);
-        Vector3 ClimbPos = new Vector3(tilePos.x + (left ? 0.5f : 0.5f), tilePos.y + 1.5f);
+        Vector3 ClimbPos=Vector3.zero;
+        if (isTile)
+        {
+            transform.position = new Vector3(tilePos.x + (left ? 2.5f : -1.5f), tilePos.y + 0.2f);
+            ClimbPos = new Vector3(tilePos.x + (left ? 0.5f : 0.5f), tilePos.y + 1.5f);
+        }
+        else
+        {
+            transform.position = new Vector3(tilePos.x + (left ? 2.5f : -1.5f), tilePos.y -0.7f);
+            ClimbPos = new Vector3(tilePos.x + (left ? 0.5f : 0.5f), tilePos.y + 0.7f);
+        }
         _spearWallGrabCol.enabled = false;
         OnWallGrab?.Invoke(ClimbPos);
     }
