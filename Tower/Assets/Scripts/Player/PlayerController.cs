@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private bool _isAlive = true;
     void Start()
     {
-        //_playerHealthSystem.OnPushed += PushPlayer;
+        _playerHealthSystem.OnPushed += PushPlayer;
         //_playerHealthSystem.OnDeath += PlayerDeath;
         List<Type> states = AppDomain.CurrentDomain.GetAssemblies().SelectMany(domainAssembly => domainAssembly.GetTypes())
             .Where(type => typeof(PlayerState).IsAssignableFrom(type) && !type.IsAbstract).ToArray().ToList();
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
     }
     public void PushPlayer(PushInfo psuhInfo)
     {
-        //_playerMovement.PushPlayer(psuhInfo);
+        _playerMovement.PushPlayer(psuhInfo);
         //_currentPlayerState.Push();
     }
     public Coroutine WaitAndExecuteFunction(float timeToWait, Action function)

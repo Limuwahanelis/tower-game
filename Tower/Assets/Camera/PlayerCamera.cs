@@ -24,7 +24,32 @@ public class PlayerCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = _transformToFollow.position+offset;
+        if (CheckForBorders)
+        {
+            if (_transformToFollow.position.x < leftScreenBorder.position.x)
+            {
+                _followOnXAxis = false;
+                _targetPos = new Vector3(leftScreenBorder.position.x, _transformToFollow.position.y);
+            }
+            else
+            {
+                CheckIfPlayerIsOnRightScreenBorder();
+            }
+
+            if (_transformToFollow.position.y < lowerScreenBorder.position.y)
+            {
+                _followOnYAxis = false;
+                _targetPos = new Vector3(_targetPos.x, lowerScreenBorder.position.y, _targetPos.z);
+
+            }
+            else
+            {
+                CheckIfPlayerIsOnUpperScreenBorder();
+            }
+            _targetPos += offset;
+            transform.position = _targetPos;
+        }
+        else transform.position = _transformToFollow.position+offset;
     }
     private void Update()
     {

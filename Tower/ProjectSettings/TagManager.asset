@@ -50,6 +50,9 @@ TagManager:
   - name: Weapon
     uniqueID: 2036058541
     locked: 0
+  - name: Player
+    uniqueID: 2681542855
+    locked: 0
   - name: Health bars
     uniqueID: 2390713843
     locked: 0

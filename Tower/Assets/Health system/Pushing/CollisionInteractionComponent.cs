@@ -8,6 +8,7 @@ public class CollisionInteractionComponent : MonoBehaviour
     [SerializeField] protected bool _pushCollidingObject;
     [SerializeField] protected bool _damageCollidingObject;
     [SerializeField] protected int _damage;
+    [SerializeField] Collider2D[] _colliders;
 
     protected PushInfo _pushInfo;
     protected DamageInfo _damageInfo;
@@ -17,12 +18,12 @@ public class CollisionInteractionComponent : MonoBehaviour
 
     private void Start()
     {
-        _pushInfo = new PushInfo( transform.position);
+        _pushInfo = new PushInfo( transform.position, _colliders);
         _damageInfo = new DamageInfo(_damage,transform.position);
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (_exludeFromHitting != (_exludeFromHitting | (1 << collision.otherCollider.gameObject.layer))) return;
+        if (_exludeFromHitting == (_exludeFromHitting | (1 << collision.otherCollider.gameObject.layer))) return;
         if (_pushCollidingObject)
         {
             IPushable toPush = collision.transform.GetComponentInParent<IPushable>();
