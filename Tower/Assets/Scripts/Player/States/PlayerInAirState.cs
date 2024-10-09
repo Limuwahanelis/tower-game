@@ -32,18 +32,48 @@ public class PlayerInAirState : PlayerState
     }
     public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
     {
-        if(modifier==PlayerCombat.AttackModifiers.UP_ARROW)
+        //if(modifier==PlayerCombat.AttackModifiers.UP_ARROW)
+        //{
+        //    _context.animationManager.Animator.SetTrigger("Up attack");
+        //    _context.spearWallGrab.SetWallGrab(true);
+        //    _context.WaitAndPerformFunction(_context.animationManager.GetAnimationLength("Attack UR 1"), () => 
+        //    {
+        //        _context.spearWallGrab.SetWallGrab(false);
+        //        _context.playerMovement.OnWallGrab -= Grabwall; 
+        //    });
+        //    _context.playerMovement.OnWallGrab += Grabwall;
+        //}
+      // else _stateTypeToChangeFromInputCommand = PlayerAttackState.StateType;
+
+        string attackTrigger = "Normal attack";
+        string animName = "Attack 1";
+        _context.spearWallGrab.SetWallGrab(true);
+        float _animLength = _context.animationManager.GetAnimationLength(animName);
+        switch (modifier)
         {
-            _context.animationManager.Animator.SetTrigger("Up attack");
-            _context.spearWallGrab.SetWallGrab(true);
-            _context.WaitAndPerformFunction(_context.animationManager.GetAnimationLength("Attack UR 1"), () => 
-            {
-                _context.spearWallGrab.SetWallGrab(false);
-                _context.playerMovement.OnWallGrab -= Grabwall; 
-            });
-            _context.playerMovement.OnWallGrab += Grabwall;
+            case PlayerCombat.AttackModifiers.UP_ARROW:
+                {
+                    attackTrigger = "Up attack";
+                    animName = "Attack UR 1";
+                    _animLength = _context.animationManager.GetAnimationLengthRaw("Attack UR 1");
+                    //_context.playerMovement.OnWallGrab += Grabwall;
+                    break;
+                }
+            case PlayerCombat.AttackModifiers.DOWN_ARROW:
+                {
+                    attackTrigger = "Down attack";
+                    animName = "Attack DR 1";
+                    _animLength = _context.animationManager.GetAnimationLengthRaw("Attack DR 1");
+                    break;
+                }
         }
-       else _stateTypeToChangeFromInputCommand = PlayerAttackState.StateType;
+        _context.WaitAndPerformFunction(_context.animationManager.GetAnimationLength(animName), () =>
+        {
+            _context.spearWallGrab.SetWallGrab(false);
+            _context.playerMovement.OnWallGrab -= Grabwall;
+        });
+        _context.playerMovement.OnWallGrab += Grabwall;
+        _context.animationManager.Animator.SetTrigger(attackTrigger);
     }
     public override void ThrowSpear(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
     {
