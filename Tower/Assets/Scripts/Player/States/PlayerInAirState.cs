@@ -14,6 +14,7 @@ public class PlayerInAirState : PlayerState
     {
         base.SetUpState(context);
         _context.playerMovement.SetRBMaterial(PlayerMovement.PhysicMaterialType.NO_FRICTION);
+        _context.spearController.OnPlayerPulledStarted += StartPlayerPull;
     }
     public override void Update()
     {
@@ -43,41 +44,49 @@ public class PlayerInAirState : PlayerState
         //    });
         //    _context.playerMovement.OnWallGrab += Grabwall;
         //}
-      // else _stateTypeToChangeFromInputCommand = PlayerAttackState.StateType;
+        // else _stateTypeToChangeFromInputCommand = PlayerAttackState.StateType;
+        _context.attackModifier = modifier;
+      ChangeState(PlayerAttackState.StateType);
 
-        string attackTrigger = "Normal attack";
-        string animName = "Attack 1";
-        _context.spearWallGrab.SetWallGrab(true);
-        float _animLength = _context.animationManager.GetAnimationLength(animName);
-        switch (modifier)
-        {
-            case PlayerCombat.AttackModifiers.UP_ARROW:
-                {
-                    attackTrigger = "Up attack";
-                    animName = "Attack UR 1";
-                    _animLength = _context.animationManager.GetAnimationLengthRaw("Attack UR 1");
-                    //_context.playerMovement.OnWallGrab += Grabwall;
-                    break;
-                }
-            case PlayerCombat.AttackModifiers.DOWN_ARROW:
-                {
-                    attackTrigger = "Down attack";
-                    animName = "Attack DR 1";
-                    _animLength = _context.animationManager.GetAnimationLengthRaw("Attack DR 1");
-                    break;
-                }
-        }
-        _context.WaitAndPerformFunction(_context.animationManager.GetAnimationLength(animName), () =>
-        {
-            _context.spearWallGrab.SetWallGrab(false);
-            _context.playerMovement.OnWallGrab -= Grabwall;
-        });
-        _context.playerMovement.OnWallGrab += Grabwall;
-        _context.animationManager.Animator.SetTrigger(attackTrigger);
+        //string attackTrigger = "Normal attack";
+        //string animName = "Attack 1";
+        //_context.spearWallGrab.SetWallGrab(true);
+        //float _animLength = _context.animationManager.GetAnimationLength(animName);
+        //switch (modifier)
+        //{
+        //    case PlayerCombat.AttackModifiers.UP_ARROW:
+        //        {
+        //            attackTrigger = "Up attack";
+        //            animName = "Attack UR 1";
+        //            _animLength = _context.animationManager.GetAnimationLengthRaw("Attack UR 1");
+        //            //_context.playerMovement.OnWallGrab += Grabwall;
+        //            break;
+        //        }
+        //    case PlayerCombat.AttackModifiers.DOWN_ARROW:
+        //        {
+        //            attackTrigger = "Down attack";
+        //            animName = "Attack DR 1";
+        //            _animLength = _context.animationManager.GetAnimationLengthRaw("Attack DR 1");
+        //            break;
+        //        }
+        //}
+        //_context.WaitAndPerformFunction(_context.animationManager.GetAnimationLength(animName), () =>
+        //{
+        //    _context.spearWallGrab.SetWallGrab(false);
+        //    _context.playerMovement.OnWallGrab -= Grabwall;
+        //});
+        //_context.playerMovement.OnWallGrab += Grabwall;
+        //_context.animationManager.Animator.SetTrigger(attackTrigger);
     }
     public override void ThrowSpear(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
     {
-        SetCommandOnNextSetUp(new HarpoonAttackInputCommand(this, modifier));
+        base.ThrowSpear(modifier);
+        switch (modifier)
+        {
+            case PlayerCombat.AttackModifiers.NONE: _context.spearController.Throw(_context.playerMovement.FlipSide * Vector3.right); break;
+            case PlayerCombat.AttackModifiers.UP_ARROW: _context.spearController.Throw(new Vector3(1 * _context.playerMovement.FlipSide, 1, 0).normalized); break;
+            case PlayerCombat.AttackModifiers.DOWN_ARROW: _context.spearController.Throw(new Vector3(1 * _context.playerMovement.FlipSide, -1, 0)); break;
+        }
     }
     private void Grabwall(Vector3 tilePos)
     {
@@ -94,6 +103,10 @@ public class PlayerInAirState : PlayerState
     public override void Move(Vector2 direction)
     {
         _context.playerMovement.Move(direction.x, true);
+    }
+    private void StartPlayerPull()
+    {
+        ChangeState(PlayerPulledState.StateType);
     }
     public override void UndoComand(Type inputCommand)
     {

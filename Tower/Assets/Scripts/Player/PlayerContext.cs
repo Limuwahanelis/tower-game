@@ -18,6 +18,7 @@ public class PlayerContext
     public PlayerAnimationsEvents animationEvents;
     public Vector3 climbTilePos;
     public PlayerSpearController spearController;
+    public PlayerColliders colliders;
    // public PlayerCollisions collisions;
    // public PlayerDodge playerDodge;
 }

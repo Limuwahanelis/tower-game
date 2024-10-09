@@ -14,7 +14,10 @@ public class AttackInputCommand : InputCommand
     {
         _playerState.Attack(_attackModifier);
     }
-
+    public override void Execute(PlayerState state)
+    {
+        state.Attack(_attackModifier);
+    }
     public override void Undo()
     {
         _playerState.UndoComand(typeof(AttackInputCommand));

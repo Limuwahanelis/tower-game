@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerSpearController : MonoBehaviour
 {
     public Action OnSpearReturned;
+    public Action OnPlayerPulledStarted;
+    public Action OnPlayerPulledEnded;
     public bool CanAttack => !_playerHarpoon.IsThrown;
    
     [SerializeField] Transform _player;
@@ -16,7 +18,8 @@ public class PlayerSpearController : MonoBehaviour
 
     private void Start()
     {
-       
+        _playerHarpoon.OnPlayerPullStarted += StartPlayerPull;
+        _playerHarpoon.OnPlayerPullEnded += EndPlayerPull;
     }
     private void Update()
     {
@@ -39,5 +42,18 @@ public class PlayerSpearController : MonoBehaviour
         _animator.enabled = true;
         gameObject.SetActive(true);
         _playerHarpoon.gameObject.SetActive(false);
+    }
+    private void StartPlayerPull()
+    {
+        OnPlayerPulledStarted?.Invoke();
+    }
+    private void EndPlayerPull()
+    { 
+        OnPlayerPulledEnded?.Invoke();
+    }
+    private void OnDestroy()
+    {
+        _playerHarpoon.OnPlayerPullStarted -= StartPlayerPull;
+        _playerHarpoon.OnPlayerPullEnded -= EndPlayerPull;
     }
 }

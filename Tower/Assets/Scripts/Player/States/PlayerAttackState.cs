@@ -41,26 +41,30 @@ public class PlayerAttackState : PlayerState
     private void SetAttack(PlayerCombat.AttackModifiers modifier)
     {
         string attackTrigger = "Normal attack";
-        _animSpeed = _context.animationManager.GetAnimationSpeed("Attack 1");
-        _animLength = _context.animationManager.GetAnimationLengthRaw("Attack 1") / _animSpeed;
+        string animName = "Attack 1";
+        _context.spearWallGrab.SetWallGrab(true);
         switch (modifier)
         {
             case PlayerCombat.AttackModifiers.UP_ARROW:
                 {
                     attackTrigger = "Up attack";
-                    _animSpeed = _context.animationManager.GetAnimationSpeed("Attack UR 1");
-                    _animLength = _context.animationManager.GetAnimationLengthRaw("Attack UR 1") / _animSpeed;
-                    _context.playerMovement.OnWallGrab += Grabwall;
+                    animName = "Attack UR 1";
+                    
                     break;
                 }
             case PlayerCombat.AttackModifiers.DOWN_ARROW:
                 {
                     attackTrigger = "Down attack";
-                    _animSpeed = _context.animationManager.GetAnimationSpeed("Attack DR 1");
-                    _animLength = _context.animationManager.GetAnimationLengthRaw("Attack DR 1") / _animSpeed;
+                    animName = "Attack DR 1";
                     break;
                 }
         }
+        _context.WaitAndPerformFunction(_context.animationManager.GetAnimationLength(animName), () =>
+        {
+            _context.spearWallGrab.SetWallGrab(false);
+            _context.playerMovement.OnWallGrab -= Grabwall;
+        });
+        _context.playerMovement.OnWallGrab += Grabwall;
         _context.animationManager.Animator.SetTrigger(attackTrigger);
         _context.combat.OnAttackEnded += AttackEnd;
     }

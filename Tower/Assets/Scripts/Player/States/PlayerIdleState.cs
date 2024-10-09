@@ -37,6 +37,7 @@ public class PlayerIdleState : PlayerState
     public override void Update()
     {
         PerformInputCommand();
+        if(!_context.checks.IsOnGround) ChangeState(PlayerInAirState.StateType);
     }
 
     public override void SetUpState(PlayerContext context)
@@ -45,10 +46,14 @@ public class PlayerIdleState : PlayerState
         //_context.animationManager.PlayAnimation("Idle");
         _context.animationManager.Animator.SetBool("Move", false);
         ExecuteSetUpCommand();
+        _context.spearController.OnPlayerPulledStarted += StartPlayerPull;
     }
-
+    private void StartPlayerPull()
+    {
+        ChangeState(PlayerPulledState.StateType);
+    }
     public override void InterruptState()
     {
-     
+        _context.spearController.OnPlayerPulledStarted -= StartPlayerPull;
     }
 }

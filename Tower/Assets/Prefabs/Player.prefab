@@ -1068,6 +1068,7 @@ MonoBehaviour:
   _playerHealthSystem: {fileID: 6718461041901753078}
   _playerSpearController: {fileID: 4817917210069266648}
   _gameOverPanel: {fileID: 0}
+  _colliders: {fileID: 1969773246353895251}
 --- !u!114 &429169553142923574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1478,6 +1479,7 @@ GameObject:
   - component: {fileID: 5795047631228063325}
   - component: {fileID: 8145623584153248823}
   - component: {fileID: 4506462793487629858}
+  - component: {fileID: 1969773246353895251}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -1538,6 +1540,20 @@ MonoBehaviour:
   ceilingCheckPos: {fileID: 0}
   ceilingCheckWidth: 0
   ceilingCheckHeight: 0
+--- !u!114 &1969773246353895251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329886453820582217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0690fce9972b140bdef2cf912fd44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collisionColliders:
+  - {fileID: 6526837617974644308}
 --- !u!1 &4344726505203511199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,7 +2257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899cd0091b858d644a08977465b35f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 8924054513837347899}
+  _playerMainBody: {fileID: 8924054513837347899}
+  _playerController: {fileID: 7154686891959223108}
   _spearHolder: {fileID: 4651792131671147898}
   _maxThrowRange: 3.8
   _throwSpeed: 9

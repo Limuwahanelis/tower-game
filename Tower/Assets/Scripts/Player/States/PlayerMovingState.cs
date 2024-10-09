@@ -16,6 +16,7 @@ public class PlayerMovingState : PlayerState
         base.SetUpState(context);
         //_context.animationManager.PlayAnimation("Move");
         _context.animationManager.Animator.SetBool("Move", true);
+        _context.spearController.OnPlayerPulledStarted += StartPlayerPull;
     }
     public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
     {
@@ -31,6 +32,7 @@ public class PlayerMovingState : PlayerState
             case PlayerCombat.AttackModifiers.UP_ARROW: _context.spearController.Throw(new Vector3(1 * _context.playerMovement.FlipSide, 1, 0).normalized); break;
             case PlayerCombat.AttackModifiers.DOWN_ARROW: _context.spearController.Throw(new Vector3(1 * _context.playerMovement.FlipSide, -1, 0)); break;
         }
+        
     }
 
     public override void Move(Vector2 direction)
@@ -43,13 +45,18 @@ public class PlayerMovingState : PlayerState
         base.Jump();
         ChangeState(PlayerJumpingState.StateType);
     }
+    private void StartPlayerPull()
+    {
+        ChangeState(PlayerPulledState.StateType);
+    }
     public override void Update()
     {
         PerformInputCommand();
+        if (!_context.checks.IsOnGround) ChangeState(PlayerInAirState.StateType);
     }
 
     public override void InterruptState()
     {
-     
+        _context.spearController.OnPlayerPulledStarted -= StartPlayerPull;
     }
 }

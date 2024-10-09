@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerSpearController _playerSpearController;
     //[SerializeField] ShadowSpikeSkill _shadowSpikeSkill;
     [SerializeField] GameObject _gameOverPanel;
+    [SerializeField] PlayerColliders _colliders;
     private PlayerState _currentPlayerState;
     private PlayerContext _context;
     private Dictionary<Type, PlayerState> playerStates = new Dictionary<Type, PlayerState>();
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
             //shadowControlModeSelectionUI = _shadowControlModeSelectionUI,
             checks = _playerChecks,
             combat = _playerCombat,
+            colliders=_colliders,
             //canPerformAirCombo = true,
             //collisions = _playerCollisions,
             //playerDodge = _playerDodge,
