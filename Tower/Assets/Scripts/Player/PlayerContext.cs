@@ -15,6 +15,7 @@ public class PlayerContext
     public PlayerChecks checks;
     public PlayerCombat combat;
     public PlayerCombat.AttackModifiers attackModifier;
+    public bool holdAttack;
     public PlayerAnimationsEvents animationEvents;
     public Vector3 climbTilePos;
     public PlayerSpearController spearController;

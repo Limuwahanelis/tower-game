@@ -13,7 +13,7 @@ public class PlayerIdleState : PlayerState
     {
         if(direction.x!=0) ChangeState(PlayerMovingState.StateType);
     }
-    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
+    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE,bool isHold=false)
     {
         _context.attackModifier = modifier;
         ChangeState(PlayerAttackState.StateType);

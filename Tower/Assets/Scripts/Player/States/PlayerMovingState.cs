@@ -18,7 +18,7 @@ public class PlayerMovingState : PlayerState
         _context.animationManager.Animator.SetBool("Move", true);
         _context.spearController.OnPlayerPulledStarted += StartPlayerPull;
     }
-    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
+    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE, bool isHold = false)
     {
         _context.attackModifier=modifier;
         ChangeState(PlayerAttackState.StateType);

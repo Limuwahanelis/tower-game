@@ -5,18 +5,20 @@ using UnityEngine;
 public class AttackInputCommand : InputCommand
 {
     private PlayerCombat.AttackModifiers _attackModifier;
-    public AttackInputCommand(PlayerState playerState, PlayerCombat.AttackModifiers attackModifier = PlayerCombat.AttackModifiers.NONE) : base(playerState)
+    private bool _isHold;
+    public AttackInputCommand(PlayerState playerState, PlayerCombat.AttackModifiers attackModifier = PlayerCombat.AttackModifiers.NONE,bool isHold=false) : base(playerState)
     {
         _attackModifier = attackModifier;
+        _isHold = isHold;
     }
 
     public override void Execute()
     {
-        _playerState.Attack(_attackModifier);
+        _playerState.Attack(_attackModifier,_isHold);
     }
     public override void Execute(PlayerState state)
     {
-        state.Attack(_attackModifier);
+        state.Attack(_attackModifier, _isHold);
     }
     public override void Undo()
     {

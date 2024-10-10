@@ -23,7 +23,7 @@ public abstract class PlayerState
     public virtual void FixedUpdate() { }
     public virtual void Move(Vector2 direction) { }
     public virtual void Jump() { }
-    public virtual void Attack(PlayerCombat.AttackModifiers modifier=PlayerCombat.AttackModifiers.NONE) { }
+    public virtual void Attack(PlayerCombat.AttackModifiers modifier=PlayerCombat.AttackModifiers.NONE, bool isHold=false) { }
     public virtual void ThrowSpear(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE) { if (!_context.spearController.CanAttack) return; }
     public virtual void Dodge(){ }
     //public virtual void Push() { ChangeState(PlayerPushedState.StateType); }

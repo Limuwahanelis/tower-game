@@ -58,6 +58,15 @@ public class PlayerSpearWallGrab : MonoBehaviour
                             OnClimb?.Invoke(_results[0].transform.position, false, false);
                         }
                     }
+                   else 
+                    {
+                        if (_playerMovement.FlipSide == ((int)PlayerMovement.playerDirection.RIGHT)) return;
+                        if (_checkPos.position.y - _results[0].transform.position.y > 0.2f)
+                        {
+                            _canGrab = false;
+                            OnClimb?.Invoke(_results[0].transform.position, true, false);
+                        }
+                    }
                 }
             }
         }

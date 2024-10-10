@@ -8,7 +8,7 @@ public class PlayerCombat : MonoBehaviour
     public enum AttackModifiers
     {
 
-        NONE, UP_ARROW, DOWN_ARROW,
+        NONE, UP_ARROW, DOWN_ARROW,HOLD
     }
     public Action OnAttackEnded;
     [SerializeField] Weapon _playerWeapon;

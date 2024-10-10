@@ -21,7 +21,7 @@ public class PlayerPulledState : PlayerState
     {
         PerformInputCommand();
     }
-    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
+    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE, bool isHold = false)
     {
         base.Attack(modifier);
         SetCommandOnNextSetUp(new AttackInputCommand(this, modifier));

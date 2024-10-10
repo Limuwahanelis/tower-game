@@ -135,7 +135,7 @@
                     "name": "",
                     "id": "810e794f-a1a8-4cf9-a73c-b7e385f825ba",
                     "path": "<Keyboard>/c",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.2)",
                     "processors": "",
                     "groups": "",
                     "action": "Attack",

@@ -10,6 +10,8 @@ public class PlayerAttackState : PlayerState
     protected float _animSpeed;
     protected float _animLength;
     private bool _nextAttack;
+    private string animName;
+    private Coroutine _cor;
     public PlayerAttackState(GetState function) : base(function)
     {
     }
@@ -29,19 +31,35 @@ public class PlayerAttackState : PlayerState
         }
         SetAttack(context.attackModifier);
     }
-    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
+    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE, bool isHold = false)
     {
-        SetAttack(modifier);
+        if(isHold)
+        {
+            _context.combat.OnAttackEnded -= AttackEnd;
+            _cor= _context.coroutineHolder.StartCoroutine(endAttackCor(_context.animationManager.GetAnimationLength(animName)));
+            // _context.WaitAndPerformFunction(_context.animationManager.GetAnimationLength(animName), () =>
+            //{
+            //    _context.animationManager.Animator.SetBool("Stop attack", true);
+            //    ChangeState(PlayerIdleState.StateType);
+            //});
+        }
+        //else SetAttack(modifier);
     }
     public override void Move(Vector2 direction)
     {
         
         _context.playerMovement.Move(direction.x);
     }
+    private IEnumerator endAttackCor(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _context.animationManager.Animator.SetBool("Stop attack", true);
+        ChangeState(PlayerIdleState.StateType);
+    }
     private void SetAttack(PlayerCombat.AttackModifiers modifier)
     {
         string attackTrigger = "Normal attack";
-        string animName = "Attack 1";
+        animName = "Attack 1";
         _context.spearWallGrab.SetWallGrab(true);
         switch (modifier)
         {
@@ -71,6 +89,7 @@ public class PlayerAttackState : PlayerState
     private void Grabwall(Vector3 tilePos)
     {
         Logger.Log("Grabbeds");
+        if (_cor != null) _context.coroutineHolder.StopCoroutine(_cor);
         _context.playerMovement.OnWallGrab -= Grabwall;
         _context.climbTilePos = tilePos;
         ChangeState(PlayerWallGrabbigState.StateType);
@@ -79,6 +98,7 @@ public class PlayerAttackState : PlayerState
     {
         Logger.Log("End atack");
         _context.combat.OnAttackEnded -= AttackEnd;
+        _context.animationManager.Animator.SetTrigger("Stop attack");
         //_context.playerMovement.OnWallGrab -= Grabwall;
         ChangeState(PlayerIdleState.StateType);
     }

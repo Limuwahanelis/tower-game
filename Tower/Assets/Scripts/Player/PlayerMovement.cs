@@ -120,8 +120,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            transform.position = new Vector3(tilePos.x + (left ? 2.5f : -1.5f), tilePos.y -0.7f);
-            ClimbPos = new Vector3(tilePos.x + (left ? 0.5f : 0.5f), tilePos.y + 0.7f);
+            transform.position = new Vector3(tilePos.x + (left ? 1.5f : -1.5f), tilePos.y -0.7f);
+            ClimbPos = new Vector3(tilePos.x + (left ? -0.5f : 0.5f), tilePos.y + 0.7f);
         }
         _spearWallGrabCol.enabled = false;
         OnWallGrab?.Invoke(ClimbPos);

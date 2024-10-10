@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
             animationEvents = _playerAnimationsEvents,
             spearWallGrab = _playerSpearWallGrab,
             spearController = _playerSpearController,
-            //coroutineHolder = this,
+            coroutineHolder = this,
             //shadowControlModeSelectionUI = _shadowControlModeSelectionUI,
             checks = _playerChecks,
             combat = _playerCombat,

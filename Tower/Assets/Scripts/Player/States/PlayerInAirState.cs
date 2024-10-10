@@ -31,7 +31,7 @@ public class PlayerInAirState : PlayerState
         }
 
     }
-    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE)
+    public override void Attack(PlayerCombat.AttackModifiers modifier = PlayerCombat.AttackModifiers.NONE, bool isHold = false)
     {
         //if(modifier==PlayerCombat.AttackModifiers.UP_ARROW)
         //{
@@ -46,6 +46,7 @@ public class PlayerInAirState : PlayerState
         //}
         // else _stateTypeToChangeFromInputCommand = PlayerAttackState.StateType;
         _context.attackModifier = modifier;
+        _context.holdAttack = isHold;
       ChangeState(PlayerAttackState.StateType);
 
         //string attackTrigger = "Normal attack";
