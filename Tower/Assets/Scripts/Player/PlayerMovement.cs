@@ -110,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
     // used by event on player spear
     public void SetUpForClimb(Vector3 tilePos,bool left,bool isTile)
     {
+        if (OnWallGrab == null) return;
         SetRB(false);
         Vector3 ClimbPos=Vector3.zero;
         if (isTile)

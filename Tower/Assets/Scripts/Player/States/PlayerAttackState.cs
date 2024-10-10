@@ -70,13 +70,16 @@ public class PlayerAttackState : PlayerState
     }
     private void Grabwall(Vector3 tilePos)
     {
+        Logger.Log("Grabbeds");
         _context.playerMovement.OnWallGrab -= Grabwall;
         _context.climbTilePos = tilePos;
         ChangeState(PlayerWallGrabbigState.StateType);
     }
     private void AttackEnd()
     {
+        Logger.Log("End atack");
         _context.combat.OnAttackEnded -= AttackEnd;
+        //_context.playerMovement.OnWallGrab -= Grabwall;
         ChangeState(PlayerIdleState.StateType);
     }
     public override void InterruptState()

@@ -45,6 +45,7 @@ public class PlayerInputHandler : MonoBehaviour
     }
     private void OnAttack(InputValue value)
     {
+        Logger.Log(value.Get<float>());
        // if (PauseSettings.IsGamePaused) return;
         if (_useCommands)
         {
