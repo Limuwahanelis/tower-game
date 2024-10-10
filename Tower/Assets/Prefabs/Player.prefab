@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8802483402573913184
 Transform:
   m_ObjectHideFlags: 0
@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1613424441
+  m_SortingLayer: 4
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: c57fe4f7c77fd0a47ad0eaa46ea23e03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1123,6 +1123,9 @@ MonoBehaviour:
   _controls: {fileID: -944628639613478452, guid: 603f6a3c3cda5504787a3d546c00e26a, type: 3}
   _useCommands: 1
   _inputStack: {fileID: 8088302168666622545}
+  _attackAction: {fileID: 5166299121096136944, guid: 603f6a3c3cda5504787a3d546c00e26a, type: 3}
+  _pauseInputAction: {fileID: -6480060322327815281, guid: 603f6a3c3cda5504787a3d546c00e26a, type: 3}
+  _pauseSetter: {fileID: 0}
 --- !u!114 &8088302168666622545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,7 +1138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a114c82d0b18b58419225a122f17f6c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _commandMaxLife: 1
+  _commandMaxLife: 0.3
   _playerController: {fileID: 7387778035583781100}
 --- !u!114 &3179352386047548989
 MonoBehaviour:

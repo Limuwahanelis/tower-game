@@ -13,18 +13,28 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] bool _useCommands;
     [SerializeField] PlayerInputStack _inputStack;
     [SerializeField] InputActionReference _attackAction;
+    [SerializeField] InputActionReference _pauseInputAction;
+    [SerializeField] PauseSetter _pauseSetter;
     private Vector2 _direction;
     //Start is called before the first frame update
     void Start()
     {
         _attackAction.action.Enable();
+        _pauseInputAction.action.performed += Pause;
+        _pauseInputAction.action.Enable();
         _player = GetComponent<PlayerController>();
         _attackAction.action.started += Attack;
         _attackAction.action.performed += AttackHold;
     }
 
+    private void Pause(InputAction.CallbackContext context)
+    {
+        _pauseSetter.SetPause(!PauseSettings.IsGamePaused);
+    }
+
     private void AttackHold(InputAction.CallbackContext context)
     {
+        if (PauseSettings.IsGamePaused) return;
         Logger.Log("Hokld");
         if (_useCommands)
         {
@@ -43,7 +53,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Attack(InputAction.CallbackContext context)
     {
-        // if (PauseSettings.IsGamePaused) return;
+         if (PauseSettings.IsGamePaused) return;
         if (_useCommands)
         {
             _inputStack.CurrentCommand = new AttackInputCommand(_player.CurrentPlayerState);
@@ -65,21 +75,22 @@ public class PlayerInputHandler : MonoBehaviour
         if (_player.IsAlive)
         {
 
-           //if (!PauseSettings.IsGamePaused)
-           //
+           if (!PauseSettings.IsGamePaused)
+           
                 _player.CurrentPlayerState.Move(_direction);
 
-           //
+           
         }
     }
     private void OnMove(InputValue value)
     {
+        if (PauseSettings.IsGamePaused) return;
         _direction = value.Get<Vector2>();
 
     }
     void OnJump(InputValue value)
     {
-        //if (PauseSettings.IsGamePaused) return;
+        if (PauseSettings.IsGamePaused) return;
         if (_useCommands) _inputStack.CurrentCommand = new JumpInputCommand(_player.CurrentPlayerState);
         else _player.CurrentPlayerState.Jump();
 
@@ -104,6 +115,7 @@ public class PlayerInputHandler : MonoBehaviour
     //}
     private void OnHarpoon(InputValue value)
     {
+        if (PauseSettings.IsGamePaused) return;
         if (!PlayerAbilities.UnlockedAbilities[((int)PlayerAbilities.Abilites.HARPOON)]) return;
         if (_useCommands)
         {
