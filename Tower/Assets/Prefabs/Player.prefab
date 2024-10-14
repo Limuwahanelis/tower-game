@@ -1086,7 +1086,7 @@ MonoBehaviour:
   _player: {fileID: 7387778035583781100}
   _dodgeSpeed: 2
   _pushHandle: {fileID: 6804104822527770826}
-  _pushForce: 24
+  _pushForce: 12
   _jumpStrength: 10
   _jumpSpeedMultiplier: 0.8
   _noFrictionMat: {fileID: 6200000, guid: ceb90b1e3c09dbf459b21b3444be239f, type: 2}
@@ -1215,7 +1215,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &3211104185981056938
@@ -1279,12 +1279,11 @@ MonoBehaviour:
   - {fileID: 6526837617974644308}
   _isInvincible: 0
   _hpBar: {fileID: 0}
-  _maxHP: 100
-  _currentHP: 100
-  _invincibilityAfterHitDuration: 1
+  _maxHP: 3
+  _currentHP: 3
+  _invincibilityAfterHitDuration: 1.5
   _pushHandle: {fileID: 6804104822527770826}
-  _invincibilityAfterPushDuration: 1
-  _pushForce: 2
+  _invincibilityAfterPushDuration: 1.5
 --- !u!1 &3240687169052057698
 GameObject:
   m_ObjectHideFlags: 0

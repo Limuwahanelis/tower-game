@@ -9,6 +9,7 @@ public class EnemyCutlass : Weapon
         if (!_isCheckingForCollisions) return;
 
         IDamagable damagable = collision.GetComponent<IDamagable>();
+        if (damagable == null) damagable = collision.attachedRigidbody.GetComponent<IDamagable>();
         if (damagable != null)
         {
             _damageInfo = new DamageInfo()

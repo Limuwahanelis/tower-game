@@ -9,13 +9,17 @@ public class PlayerHealthSystem : HealthSystem,IPushable
     public Action<PushInfo> OnPushed;
     [SerializeField] Ringhandle _pushHandle;
     [SerializeField] float _invincibilityAfterPushDuration;
-    [SerializeField] float _pushForce=2f;
     private bool _isInvincibleAfterPush;
     private new void Start()
     {
         if (_hpBar == null) return;
         _hpBar.SetMaxHealth(_maxHP);
         _hpBar.SetHealth(_maxHP);
+        if(PlayerStats.PlayerHealth<_currentHP)
+        {
+            _hpBar.SetMaxHealth(PlayerStats.PlayerHealth);
+            _hpBar.SetHealth(PlayerStats.PlayerHealth);
+        }
     }
     IEnumerator PushCor(Collider2D[] colls)
     {
@@ -33,7 +37,7 @@ public class PlayerHealthSystem : HealthSystem,IPushable
         OnPushed?.Invoke(pushInfo);
         if (pushInfo.involvedColliders != null && pushInfo.involvedColliders.Length>0)
         {
-            PreventCollisions(pushInfo.involvedColliders);
+            //PreventCollisions(pushInfo.involvedColliders);
             StartCoroutine(PushCor(pushInfo.involvedColliders));
         }
     }

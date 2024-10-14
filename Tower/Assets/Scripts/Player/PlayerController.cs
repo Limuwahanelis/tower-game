@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerColliders _colliders;
     private PlayerState _currentPlayerState;
     private PlayerContext _context;
+    private PlayerState _playerPushedState;
     private Dictionary<Type, PlayerState> playerStates = new Dictionary<Type, PlayerState>();
     private bool _isAlive = true;
     void Start()
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
         {
             playerStates.Add(state, (PlayerState)Activator.CreateInstance(state, getState));
         }
+        _playerPushedState = GetState(typeof(PlayerPushedState));
         PlayerState newState = GetState(typeof(PlayerIdleState));
         newState.SetUpState(_context);
         _currentPlayerState = newState;
@@ -95,6 +97,8 @@ public class PlayerController : MonoBehaviour
     public void PushPlayer(PushInfo psuhInfo)
     {
         _playerMovement.PushPlayer(psuhInfo);
+        ChangeState(_playerPushedState);
+        _playerPushedState.SetUpState(_context);
         //_currentPlayerState.Push();
     }
     public Coroutine WaitAndExecuteFunction(float timeToWait, Action function)

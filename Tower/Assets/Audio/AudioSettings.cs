@@ -11,7 +11,9 @@ public class AudioSettings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _masterVolumeSlider.value = AudioVolumes.Master;
+        _BGMVolumeSlider.value = AudioVolumes.BGM;
+        _sfxVolumeSlider.value = AudioVolumes.SFX;
     }
 
     // Update is called once per frame
