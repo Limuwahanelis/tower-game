@@ -15,6 +15,7 @@ public class PlayerPulledState : PlayerState
         base.SetUpState(context);
         _context.spearController.OnPlayerPulledEnded += EndPull;
         _context.colliders.SetCollisionsColliders(false);
+        _context.playerMovement.StopPlayer();
         _context.playerMovement.SetRB(false);
     }
     public override void Update()

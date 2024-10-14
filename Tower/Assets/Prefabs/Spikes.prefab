@@ -198,4 +198,5 @@ MonoBehaviour:
   _pushCollidingObject: 1
   _damageCollidingObject: 1
   _damage: 1
-  _colliders: []
+  _colliders:
+  - {fileID: 5228022071504140950}

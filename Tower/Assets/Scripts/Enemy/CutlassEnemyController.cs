@@ -16,6 +16,8 @@ public class CutlassEnemyController : EnemyController
 
     void Start()
     {
+        if(_playerTransform==null) _playerTransform=GetComponent<PlayerController>().transform;
+
         _healthSystem.OnDeath += Kill;
         List<Type> states = AppDomain.CurrentDomain.GetAssemblies().SelectMany(domainAssembly => domainAssembly.GetTypes())
     .Where(type => typeof(EnemyState).IsAssignableFrom(type) && !type.IsAbstract).ToArray().ToList();

@@ -46,6 +46,15 @@ public class PlayerHealthSystem : HealthSystem,IPushable
         _hpBar.SetMaxHealth(_maxHP);
         _hpBar.SetHealth(_currentHP);
     }
+    public override void TakeDamage(DamageInfo info)
+    {
+        base.TakeDamage(info);
+        PlayerStats.SetPlayerHealth(_currentHP);
+    }
 
-
+    public override void TakeDamageWithoutNotify(DamageInfo info)
+    {
+        base.TakeDamageWithoutNotify(info);
+        PlayerStats.SetPlayerHealth(_currentHP);
+    }
 }
